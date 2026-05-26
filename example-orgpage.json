@@ -1,0 +1,394 @@
+{
+  "id": "e8efc539-e16f-4c28-9923-65022103bee1",
+  "title": "OrgPage data example",
+  "description": "A simple OrgPad created to showcase how data in OrgPad look.",
+  "tags": [
+    "example",
+    "API",
+    "OrgPad",
+    "data"
+  ],
+  "color": "color/purple",
+  "initFragments": {
+    "default": "361e0937-4876-4600-8815-39cae4bdbc96",
+    "smallScreen": "1a23f4b4-d1ca-49e3-9741-d4811f899f8d"
+  },
+  "owner": "50475d55-4f6d-401f-9b08-33927a04897f",
+  "creationTime": "2026-05-13T13:46:23.139749Z",
+  "lastEditTime": "2026-05-13T13:47:09.627888Z",
+  "units": [
+    {
+      "id": "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd",
+      "textId": "binomial-book",
+      "type": "unit/book",
+      "childUnitIds": [
+        "da5b1957-7d24-44f9-869e-9cebe27f7e67",
+        "06fcdc12-0d52-4847-9b88-c685d72f364e"
+      ],
+      "pos": [
+        -678.4950106793899,
+        -290.60864427844024
+      ],
+      "title": "Binomial theorem",
+      "props": {
+        "titleSize": "props/h2",
+        "color": "color/teal"
+      }
+    },
+    {
+      "id": "da5b1957-7d24-44f9-869e-9cebe27f7e67",
+      "textId": "binomial-page1",
+      "type": "unit/page",
+      "parentId": "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd",
+      "content": "<p><a href=\"https://en.wikipedia.org/wiki/Binomial_theorem\">Binomial theorem</a> states for every <math id=\"bf9dfb8f-e3c6-4d5b-93e6-2006dec8e294\"></math> and <math id=\"bd17c7be-c295-436a-9ac7-525581a641d1\"></math> that</p><p><math id=\"488d2221-c45e-4a4a-9845-ed2ff00f5ed3\"></math></p><p><a href=\"/file/A1wzY1upVBw5SBwTeHWt8k\"><img height=\"24\" src=\"/static/img/files/pdf.svg\" style=\"margin-bottom:6;margin-right:4;vertical-align:text-bottom;\" width=\"24\" />Binomial_theorem.pdf</a></p>"
+    },
+    {
+      "id": "ce6be8c1-8de4-462c-8b51-094412bf42ea",
+      "type": "unit/page",
+      "parentId": "d9c8360b-0811-4808-97ed-f1f65f208fed",
+      "content": "<p><orgpage height=\"395\" id=\"fdccc1af-761d-4c02-bede-8f8396894dcf\" query-params=\"s:polynomials;\" token=\"2a84ae40-a6f6-4466-b957-efb8311f3a23\" width=\"700\"></orgpage></p>"
+    },
+    {
+      "id": "b47226d3-226b-4c79-91a3-095a2bddbdd3",
+      "type": "unit/book",
+      "childUnitIds": [
+        "2c96fc3e-0c77-4058-be3e-a5b833940e11"
+      ],
+      "pos": [
+        -1362.8012002262901,
+        305.0678620990308
+      ],
+      "props": {
+        "titleSize": "props/h2",
+        "color": "color/red"
+      }
+    },
+    {
+      "id": "c5f5584e-ca21-4a58-9827-70a859dd76f9",
+      "type": "unit/page",
+      "parentId": "a1506e9e-eb3c-4507-9fba-195d5e6e493c",
+      "content": "<p><img height=\"500\" src=\"/img/DEBwDAe1tM9omDMbRIP1Mb\" width=\"500\" /></p>"
+    },
+    {
+      "id": "843fe53a-a75e-4d11-9dd4-018d758e2beb",
+      "type": "unit/page",
+      "parentId": "f71d5f0e-7863-4ab6-8f24-1e1dea820bb5",
+      "content": "<p>Binomial coefficient </p><p><math id=\"19121d25-963d-4c9a-89ac-93bc35870870\"></math></p><p> can be computed in this way: </p><code block=\"block\" lang=\"cpp\">int choose(int n, int k) {<br />  if (k &gt; n) return 0;<br />  if (k &gt; n - k) k = n - k;<br /><br />  int r = 1;<br />  for (int i = 1; i &lt;= k; i++)<br />    r = r * (n - k + i) / i;<br /><br />  return r;<br />}</code><p>For example, <code lang=\"cpp\">choose(4, 2);</code> returns 6.</p>"
+    },
+    {
+      "id": "2c96fc3e-0c77-4058-be3e-a5b833940e11",
+      "type": "unit/page",
+      "parentId": "b47226d3-226b-4c79-91a3-095a2bddbdd3",
+      "content": "<p><youtube id=\"k-9YCo_C4J4\" width=\"560\" height=\"314\"></youtube></p>"
+    },
+    {
+      "id": "f71d5f0e-7863-4ab6-8f24-1e1dea820bb5",
+      "type": "unit/book",
+      "childUnitIds": [
+        "843fe53a-a75e-4d11-9dd4-018d758e2beb"
+      ],
+      "pos": [
+        -75.54478863069679,
+        46.913746590527474
+      ],
+      "title": "Computing binomial coefficients",
+      "props": {
+        "titleSize": "props/h2",
+        "color": "color/blueberry"
+      }
+    },
+    {
+      "id": "d9c8360b-0811-4808-97ed-f1f65f208fed",
+      "type": "unit/book",
+      "childUnitIds": [
+        "ce6be8c1-8de4-462c-8b51-094412bf42ea"
+      ],
+      "pos": [
+        -1399.9815276890845,
+        -203.45467808824483
+      ],
+      "title": "OrgPage about Pascal's triangle",
+      "props": {
+        "titleSize": "props/h2",
+        "color": "color/orange"
+      }
+    },
+    {
+      "id": "a1506e9e-eb3c-4507-9fba-195d5e6e493c",
+      "type": "unit/book",
+      "childUnitIds": [
+        "c5f5584e-ca21-4a58-9827-70a859dd76f9"
+      ],
+      "pos": [
+        -703.0564947062946,
+        100.85513223516287
+      ],
+      "title": "Pascal's triangle",
+      "props": {
+        "titleSize": "props/h2",
+        "color": "color/yellow"
+      }
+    },
+    {
+      "id": "06fcdc12-0d52-4847-9b88-c685d72f364e",
+      "textId": "binomial-page2",
+      "type": "unit/page",
+      "parentId": "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd",
+      "content": "<p><embed id=\"6b921cb9-a9d9-4e43-b4a5-468ed99174b4\" width=\"700\" height=\"450\"/></p>"
+    }
+  ],
+  "links": [
+    {
+      "id": "aa2fbd1c-f70c-4663-a5a4-0b5dfb73a021",
+      "endpointIds": [
+        "f71d5f0e-7863-4ab6-8f24-1e1dea820bb5",
+        "a1506e9e-eb3c-4507-9fba-195d5e6e493c"
+      ],
+      "props": {
+        "arrowhead": "props/double",
+        "color": "color/orchid"
+      }
+    },
+    {
+      "id": "b3edd677-4b27-41ce-bfea-92f6de0e1e8a",
+      "endpointIds": [
+        "d9c8360b-0811-4808-97ed-f1f65f208fed",
+        "b47226d3-226b-4c79-91a3-095a2bddbdd3"
+      ],
+      "props": {
+        "arrowhead": "props/single",
+        "color": "color/purple"
+      }
+    },
+    {
+      "id": "61b08d4a-d24c-44dd-8652-f9405ed85ebd",
+      "endpointIds": [
+        "a1506e9e-eb3c-4507-9fba-195d5e6e493c",
+        "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd"
+      ],
+      "props": {
+        "weight": "props/strong",
+        "arrowhead": "props/none",
+        "color": "color/blue"
+      }
+    },
+    {
+      "id": "f83659ce-4951-4585-8992-8655bcb9b50e",
+      "endpointIds": [
+        "b47226d3-226b-4c79-91a3-095a2bddbdd3",
+        "a1506e9e-eb3c-4507-9fba-195d5e6e493c"
+      ],
+      "props": {
+        "arrowhead": "props/single",
+        "color": "color/red"
+      }
+    },
+    {
+      "id": "0af5d31c-57f3-4a6f-b801-221f2c28ee15",
+      "endpointIds": [
+        "f71d5f0e-7863-4ab6-8f24-1e1dea820bb5",
+        "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd"
+      ],
+      "props": {
+        "weight": "props/strong",
+        "arrowhead": "props/single",
+        "color": "color/orange"
+      }
+    }
+  ],
+  "files": [
+    {
+      "id": "35c33635-ba95-41c3-9481-c137875adf24",
+      "token": "2498ced3-60be-48b7-b86a-9b5b3a79316e",
+      "filename": "Binomial_theorem.pdf",
+      "contentType": "application/pdf",
+      "size": 947386,
+      "lastModified": "2026-05-13T12:52:48.415900369Z"
+    }
+  ],
+  "images": [
+    {
+      "id": "c40700c0-7b5b-4cf6-8983-31b4483f531b",
+      "token": "8b52d311-9b92-4d27-9777-477787b9efe2",
+      "filename": "f-d%3A3db24f8f7a547d0c3566f2662de05eff447bfd4bf5996dee1e4010c4%2BIMAGE_TINY%2BIMAGE_TINY.1",
+      "width": 540,
+      "height": 540,
+      "format": "png",
+      "thumbnailFormat": "png",
+      "size": 10792,
+      "lastModified": "2026-05-13T10:21:36.156948376Z",
+      "url": "https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A3db24f8f7a547d0c3566f2662de05eff447bfd4bf5996dee1e4010c4%2BIMAGE_TINY%2BIMAGE_TINY.1",
+      "thumbnailSizes": [
+        {
+          "width": 540,
+          "height": 540,
+          "size": 10792
+        },
+        {
+          "width": 500,
+          "height": 500,
+          "size": 46379
+        },
+        {
+          "width": 250,
+          "height": 250,
+          "size": 18619
+        },
+        {
+          "width": 125,
+          "height": 125,
+          "size": 7498
+        }
+      ]
+    }
+  ],
+  "maths": [
+    {
+      "id": "bf9dfb8f-e3c6-4d5b-93e6-2006dec8e294",
+      "pageId": "da5b1957-7d24-44f9-869e-9cebe27f7e67",
+      "type": "math/math",
+      "source": "x,y \\in \\mathbb R",
+      "width": 8.019,
+      "height": 2.509,
+      "verticalAlign": -0.671,
+      "svg": "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"8.019ex\" height=\"2.509ex\" style=\"vertical-align: -0.671ex;\" viewBox=\"0 -791.3 3452.7 1080.4\" role=\"img\" focusable=\"false\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D465\" d=\"M305 288l45 69c26 40 61 84 111 84c32 0 49 -12 49 -33c0 -19 -13 -42 -39 -42c-22 0 -27 9 -44 9c-30 0 -41 -16 -55 -38l-55 -85c30 -62 53 -197 98 -197c16 0 40 14 61 57l14 -10c-12 -15 -57 -111 -115 -111c-41 0 -60 41 -73 77l-40 113l-63 -98 c-32 -49 -61 -92 -117 -92c-36 0 -52 25 -52 47c0 16 13 37 38 37c26 0 22 -20 47 -20c12 0 38 10 70 59l65 101l-33 92c-17 48 -43 89 -98 89c-13 0 -28 -2 -38 -6l-3 18l132 33c44 -24 63 -65 75 -98Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-2C\" d=\"M83 -141l-10 19c55 37 83 74 83 107c0 7 -6 13 -14 13s-18 -4 -29 -4c-37 0 -58 17 -58 51s24 57 60 57c45 0 80 -35 80 -87c0 -60 -43 -123 -112 -156Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D466\" d=\"M270 307l28 -235c61 83 96 143 118 184c20 37 28 57 28 75c0 21 -52 31 -52 69c0 22 18 40 47 40c32 0 57 -23 57 -62c0 -78 -162 -318 -204 -371c-73 -92 -138 -190 -206 -190c-37 0 -56 31 -56 55c0 30 27 41 40 41c43 0 41 -31 57 -31c17 0 74 62 100 102l-38 314 c-5 45 -14 105 -70 105c-11 0 -27 -3 -36 -4l-2 16l150 25c23 -33 30 -59 39 -133Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-2208\" d=\"M625 -27h-291c-160 0 -274 131 -274 279s112 279 271 279h294v-66h-290c-103 0 -189 -85 -206 -180h496v-66h-497c17 -95 103 -180 206 -180h291v-66Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBDOUBLESTRUCK-211D\" d=\"M712 0h-207l-195 271h-74v-271h-166v662h320c128 0 238 -53 238 -196c0 -88 -46 -155 -131 -181zM491 604v-283c58 24 93 81 93 143c0 68 -33 113 -93 140zM447 320v290c-15 2 -35 8 -50 8h-161v-303h156c18 0 37 3 55 5zM626 44l-175 231c-29 -5 -59 -4 -88 -4l165 -227 h98zM192 44v574h-78v-574h78Z\"></path>\n</defs>\n<g stroke=\"currentColor\" fill=\"currentColor\" stroke-width=\"0\" transform=\"matrix(1 0 0 -1 0 0)\">\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D465\" x=\"0\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-2C\" x=\"550\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D466\" x=\"967\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-2208\" x=\"1741\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBDOUBLESTRUCK-211D\" x=\"2705\" y=\"0\"></use>\n</g>\n</svg>"
+    },
+    {
+      "id": "bd17c7be-c295-436a-9ac7-525581a641d1",
+      "pageId": "da5b1957-7d24-44f9-869e-9cebe27f7e67",
+      "type": "math/math",
+      "source": "n \\in \\mathbb N",
+      "width": 5.66,
+      "height": 2.176,
+      "verticalAlign": -0.338,
+      "svg": "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"5.66ex\" height=\"2.176ex\" style=\"vertical-align: -0.338ex;\" viewBox=\"0 -791.3 2437.1 936.9\" role=\"img\" focusable=\"false\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D45B\" d=\"M467 96l-5 -6c-28 -34 -76 -98 -128 -98c-32 0 -41 23 -41 46c0 13 4 29 7 40l57 221c2 8 7 28 7 42c0 19 -6 38 -24 38c-38 0 -101 -86 -132 -133c-36 -54 -62 -101 -68 -122l-33 -124h-77l95 374c0 18 -3 32 -30 32c-10 0 -21 -2 -28 -3l-2 15l159 23l-51 -189h3 c5 0 54 70 56 73c40 50 100 116 160 116c44 0 56 -29 56 -62c0 -25 -6 -50 -11 -70l-59 -231c-1 -2 -1 -5 -1 -10c1 -6 4 -14 15 -14c24 0 48 36 62 53Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-2208\" d=\"M625 -27h-291c-160 0 -274 131 -274 279s112 279 271 279h294v-66h-290c-103 0 -189 -85 -206 -180h496v-66h-497c17 -95 103 -180 206 -180h291v-66Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBDOUBLESTRUCK-2115\" d=\"M628 0h-134l-378 504h-2v-504h-22h-22v662h135l32 -45l346 -461h1v506h44v-662zM584 44v39l-402 535h-68v-40l401 -534h69Z\"></path>\n</defs>\n<g stroke=\"currentColor\" fill=\"currentColor\" stroke-width=\"0\" transform=\"matrix(1 0 0 -1 0 0)\">\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D45B\" x=\"0\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-2208\" x=\"775\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBDOUBLESTRUCK-2115\" x=\"1738\" y=\"0\"></use>\n</g>\n</svg>"
+    },
+    {
+      "id": "19121d25-963d-4c9a-89ac-93bc35870870",
+      "pageId": "843fe53a-a75e-4d11-9dd4-018d758e2beb",
+      "type": "math/math",
+      "block": true,
+      "source": "{n \\choose k} = {n! \\over k! (n-k)!}",
+      "width": 17.863,
+      "height": 6.176,
+      "verticalAlign": -2.505,
+      "svg": "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"17.863ex\" height=\"6.176ex\" style=\"vertical-align: -2.505ex;\" viewBox=\"0 -1580.7 7691 2659.1\" role=\"img\" focusable=\"false\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-28\" d=\"M304 -161l-12 -16c-158 90 -244 259 -244 429c0 185 87 329 247 424l9 -16c-139 -119 -170 -212 -170 -405c0 -186 30 -299 170 -416Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBSIZE3-28\" d=\"M667 -346v-48c-284 267 -485 689 -485 1230c0 538 201 1002 485 1230v-44c-178 -184 -375 -580 -375 -1186c0 -613 197 -962 375 -1182Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D45B\" d=\"M467 96l-5 -6c-28 -34 -76 -98 -128 -98c-32 0 -41 23 -41 46c0 13 4 29 7 40l57 221c2 8 7 28 7 42c0 19 -6 38 -24 38c-38 0 -101 -86 -132 -133c-36 -54 -62 -101 -68 -122l-33 -124h-77l95 374c0 18 -3 32 -30 32c-10 0 -21 -2 -28 -3l-2 15l159 23l-51 -189h3 c5 0 54 70 56 73c40 50 100 116 160 116c44 0 56 -29 56 -62c0 -25 -6 -50 -11 -70l-59 -231c-1 -2 -1 -5 -1 -10c1 -6 4 -14 15 -14c24 0 48 36 62 53Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D458\" d=\"M527 428l-4 -12c-67 -7 -95 -25 -133 -58l-106 -92l64 -152c15 -35 27 -59 53 -59c30 0 52 43 74 73l15 -11c-12 -21 -59 -128 -127 -128c-46 0 -67 53 -78 79l-63 147l-56 -49l-45 -166h-76l148 589c2 6 3 13 3 20c0 11 -10 22 -32 22c-9 0 -19 0 -27 -2l-3 14l158 25 l-113 -456l167 149c11 10 21 23 21 36c0 12 -16 19 -26 19h-12l4 12h194Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-29\" d=\"M29 660l12 16c153 -92 244 -259 244 -429c0 -185 -88 -327 -247 -424l-9 16c142 117 170 211 170 405c0 187 -25 302 -170 416Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBSIZE3-29\" d=\"M83 2018v48c284 -267 485 -685 485 -1230c0 -534 -201 -1002 -485 -1230v44c178 184 375 580 375 1186c0 614 -197 965 -375 1182Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-3D\" d=\"M637 320h-589v66h589v-66zM637 120h-589v66h589v-66Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-21\" d=\"M175 176l-42 381c-2 20 -3 32 -3 43c0 43 15 76 53 76c34 0 53 -32 53 -81c0 -12 -1 -27 -2 -38l-45 -381h-14zM236 42c0 -29 -23 -51 -54 -51c-30 0 -52 22 -52 52s23 54 53 54c29 0 53 -25 53 -55Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-2212\" d=\"M621 220h-557v66h557v-66Z\"></path>\n</defs>\n<g stroke=\"currentColor\" fill=\"currentColor\" stroke-width=\"0\" transform=\"matrix(1 0 0 -1 0 0)\">\n <use xlink:href=\"#E1-STIXWEBSIZE3-28\" x=\"0\" y=\"-586\"></use>\n<g transform=\"translate(750,0)\">\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D45B\" x=\"22\" y=\"676\"></use>\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D458\" x=\"0\" y=\"-686\"></use>\n</g>\n <use xlink:href=\"#E1-STIXWEBSIZE3-29\" x=\"1293\" y=\"-586\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-3D\" x=\"2321\" y=\"0\"></use>\n<g transform=\"translate(3284,0)\">\n<g transform=\"translate(120,0)\">\n<rect stroke=\"none\" width=\"4166\" height=\"60\" x=\"0\" y=\"220\"></rect>\n<g transform=\"translate(1667,676)\">\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D45B\" x=\"0\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-21\" x=\"497\" y=\"0\"></use>\n</g>\n<g transform=\"translate(60,-697)\">\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D458\" x=\"0\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-21\" x=\"542\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-28\" x=\"876\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D45B\" x=\"1209\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-2212\" x=\"1929\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D458\" x=\"2836\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-29\" x=\"3379\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-21\" x=\"3712\" y=\"0\"></use>\n</g>\n</g>\n</g>\n</g>\n</svg>"
+    },
+    {
+      "id": "488d2221-c45e-4a4a-9845-ed2ff00f5ed3",
+      "pageId": "da5b1957-7d24-44f9-869e-9cebe27f7e67",
+      "type": "math/math",
+      "block": true,
+      "source": "(x+y)^n = \\sum_{k=0}^n {n \\choose k} x^ky^{n-k}.",
+      "width": 25.875,
+      "height": 7.176,
+      "verticalAlign": -3.171,
+      "svg": "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"25.875ex\" height=\"7.176ex\" style=\"vertical-align: -3.171ex;\" viewBox=\"0 -1724.2 11140.7 3089.6\" role=\"img\" focusable=\"false\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-28\" d=\"M304 -161l-12 -16c-158 90 -244 259 -244 429c0 185 87 329 247 424l9 -16c-139 -119 -170 -212 -170 -405c0 -186 30 -299 170 -416Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D465\" d=\"M305 288l45 69c26 40 61 84 111 84c32 0 49 -12 49 -33c0 -19 -13 -42 -39 -42c-22 0 -27 9 -44 9c-30 0 -41 -16 -55 -38l-55 -85c30 -62 53 -197 98 -197c16 0 40 14 61 57l14 -10c-12 -15 -57 -111 -115 -111c-41 0 -60 41 -73 77l-40 113l-63 -98 c-32 -49 -61 -92 -117 -92c-36 0 -52 25 -52 47c0 16 13 37 38 37c26 0 22 -20 47 -20c12 0 38 10 70 59l65 101l-33 92c-17 48 -43 89 -98 89c-13 0 -28 -2 -38 -6l-3 18l132 33c44 -24 63 -65 75 -98Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-2B\" d=\"M636 220h-261v-261h-66v261h-261v66h261v261h66v-261h261v-66Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D466\" d=\"M270 307l28 -235c61 83 96 143 118 184c20 37 28 57 28 75c0 21 -52 31 -52 69c0 22 18 40 47 40c32 0 57 -23 57 -62c0 -78 -162 -318 -204 -371c-73 -92 -138 -190 -206 -190c-37 0 -56 31 -56 55c0 30 27 41 40 41c43 0 41 -31 57 -31c17 0 74 62 100 102l-38 314 c-5 45 -14 105 -70 105c-11 0 -27 -3 -36 -4l-2 16l150 25c23 -33 30 -59 39 -133Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-29\" d=\"M29 660l12 16c153 -92 244 -259 244 -429c0 -185 -88 -327 -247 -424l-9 16c142 117 170 211 170 405c0 187 -25 302 -170 416Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D45B\" d=\"M467 96l-5 -6c-28 -34 -76 -98 -128 -98c-32 0 -41 23 -41 46c0 13 4 29 7 40l57 221c2 8 7 28 7 42c0 19 -6 38 -24 38c-38 0 -101 -86 -132 -133c-36 -54 -62 -101 -68 -122l-33 -124h-77l95 374c0 18 -3 32 -30 32c-10 0 -21 -2 -28 -3l-2 15l159 23l-51 -189h3 c5 0 54 70 56 73c40 50 100 116 160 116c44 0 56 -29 56 -62c0 -25 -6 -50 -11 -70l-59 -231c-1 -2 -1 -5 -1 -10c1 -6 4 -14 15 -14c24 0 48 36 62 53Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-3D\" d=\"M637 320h-589v66h589v-66zM637 120h-589v66h589v-66Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBSIZE1-2211\" d=\"M1202 465l-74 -416h-1038l557 735l-521 715h976v-351h-36c0 19 -7 45 -11 65c-28 131 -95 183 -162 191c-28 4 -71 5 -106 5h-377l411 -564l-470 -613h568c139 0 208 69 244 233h39Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBNORMALI-1D458\" d=\"M527 428l-4 -12c-67 -7 -95 -25 -133 -58l-106 -92l64 -152c15 -35 27 -59 53 -59c30 0 52 43 74 73l15 -11c-12 -21 -59 -128 -127 -128c-46 0 -67 53 -78 79l-63 147l-56 -49l-45 -166h-76l148 589c2 6 3 13 3 20c0 11 -10 22 -32 22c-9 0 -19 0 -27 -2l-3 14l158 25 l-113 -456l167 149c11 10 21 23 21 36c0 12 -16 19 -26 19h-12l4 12h194Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-30\" d=\"M476 330c0 -172 -63 -344 -226 -344c-171 0 -226 186 -226 350c0 177 69 340 230 340c131 0 222 -141 222 -346zM380 325c0 208 -44 325 -132 325c-83 0 -128 -118 -128 -321s44 -317 130 -317c85 0 130 115 130 313Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBSIZE3-28\" d=\"M667 -346v-48c-284 267 -485 689 -485 1230c0 538 201 1002 485 1230v-44c-178 -184 -375 -580 -375 -1186c0 -613 197 -962 375 -1182Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBSIZE3-29\" d=\"M83 2018v48c284 -267 485 -685 485 -1230c0 -534 -201 -1002 -485 -1230v44c178 184 375 580 375 1186c0 614 -197 965 -375 1182Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-2212\" d=\"M621 220h-557v66h557v-66Z\"></path>\n<path stroke-width=\"1\" id=\"E1-STIXWEBMAIN-2E\" d=\"M181 43c0 -29 -26 -54 -56 -54c-31 0 -55 24 -55 55s25 56 56 56c29 0 55 -27 55 -57Z\"></path>\n</defs>\n<g stroke=\"currentColor\" fill=\"currentColor\" stroke-width=\"0\" transform=\"matrix(1 0 0 -1 0 0)\">\n <use xlink:href=\"#E1-STIXWEBMAIN-28\" x=\"0\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D465\" x=\"333\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBMAIN-2B\" x=\"1106\" y=\"0\"></use>\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D466\" x=\"2013\" y=\"0\"></use>\n<g transform=\"translate(2510,0)\">\n <use xlink:href=\"#E1-STIXWEBMAIN-29\" x=\"0\" y=\"0\"></use>\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBNORMALI-1D45B\" x=\"471\" y=\"583\"></use>\n</g>\n <use xlink:href=\"#E1-STIXWEBMAIN-3D\" x=\"3573\" y=\"0\"></use>\n<g transform=\"translate(4536,0)\">\n <use xlink:href=\"#E1-STIXWEBSIZE1-2211\" x=\"0\" y=\"-524\"></use>\n<g transform=\"translate(35,-1122)\">\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBNORMALI-1D458\" x=\"0\" y=\"0\"></use>\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBMAIN-3D\" x=\"542\" y=\"0\"></use>\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBMAIN-30\" x=\"1228\" y=\"0\"></use>\n</g>\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBNORMALI-1D45B\" x=\"665\" y=\"1663\"></use>\n</g>\n<g transform=\"translate(5995,0)\">\n <use xlink:href=\"#E1-STIXWEBSIZE3-28\" x=\"0\" y=\"-586\"></use>\n<g transform=\"translate(750,0)\">\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D45B\" x=\"22\" y=\"676\"></use>\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D458\" x=\"0\" y=\"-686\"></use>\n</g>\n <use xlink:href=\"#E1-STIXWEBSIZE3-29\" x=\"1293\" y=\"-586\"></use>\n</g>\n<g transform=\"translate(8039,0)\">\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D465\" x=\"0\" y=\"0\"></use>\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBNORMALI-1D458\" x=\"778\" y=\"583\"></use>\n</g>\n<g transform=\"translate(9073,0)\">\n <use xlink:href=\"#E1-STIXWEBNORMALI-1D466\" x=\"0\" y=\"0\"></use>\n<g transform=\"translate(496,412)\">\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBNORMALI-1D45B\" x=\"0\" y=\"0\"></use>\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBMAIN-2212\" x=\"497\" y=\"0\"></use>\n <use transform=\"scale(0.707)\" xlink:href=\"#E1-STIXWEBNORMALI-1D458\" x=\"1183\" y=\"0\"></use>\n</g>\n</g>\n <use xlink:href=\"#E1-STIXWEBMAIN-2E\" x=\"10890\" y=\"0\"></use>\n</g>\n</svg>"
+    }
+  ],
+  "embeds": [
+    {
+      "id": "6b921cb9-a9d9-4e43-b4a5-468ed99174b4",
+      "pageId": "06fcdc12-0d52-4847-9b88-c685d72f364e",
+      "fileId": "35c33635-ba95-41c3-9481-c137875adf24"
+    }
+  ],
+  "fragments": [
+    {
+      "id": "361e0937-4876-4600-8815-39cae4bdbc96",
+      "textId": "bin-theorem",
+      "title": "Binomial Theorem",
+      "openedPageIds": [
+        "da5b1957-7d24-44f9-869e-9cebe27f7e67"
+      ],
+      "focusedBookIds": [
+        "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd"
+      ]
+    },
+    {
+      "id": "1a23f4b4-d1ca-49e3-9741-d4811f899f8d",
+      "textId": "pascal-video",
+      "title": "Pascal video",
+      "openedPageIds": [
+        "ce6be8c1-8de4-462c-8b51-094412bf42ea"
+      ],
+      "focusedBookIds": [
+        "b47226d3-226b-4c79-91a3-095a2bddbdd3",
+        "d9c8360b-0811-4808-97ed-f1f65f208fed"
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "id": "6d12c87d-1804-472b-8cc7-b2259ef2ba27",
+      "title": "Example presentation",
+      "stepIds": [
+        "5911ae1b-1b23-4c95-845c-813e12d131e1",
+        "04f7bb75-7b6f-4b3c-a55c-ec553c7d5361",
+        "aa15e4c0-d1a0-4697-a38a-6eb013a26b74",
+        "cc472b3b-7df7-40ee-b9cb-6668c49f31df",
+        "488cee41-0f98-423e-8b92-ef5df91e2903",
+        "4bf18c56-55e5-46dd-b308-0a9cb44c72f6"
+      ]
+    }
+  ],
+  "pathSteps": [
+    {
+      "id": "5911ae1b-1b23-4c95-845c-813e12d131e1",
+      "focusedBookIds": [
+        "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd",
+        "b47226d3-226b-4c79-91a3-095a2bddbdd3",
+        "f71d5f0e-7863-4ab6-8f24-1e1dea820bb5",
+        "d9c8360b-0811-4808-97ed-f1f65f208fed",
+        "a1506e9e-eb3c-4507-9fba-195d5e6e493c"
+      ]
+    },
+    {
+      "id": "04f7bb75-7b6f-4b3c-a55c-ec553c7d5361",
+      "focusedBookIds": [
+        "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd"
+      ],
+      "openedPageIds": [
+        "da5b1957-7d24-44f9-869e-9cebe27f7e67"
+      ]
+    },
+    {
+      "id": "aa15e4c0-d1a0-4697-a38a-6eb013a26b74",
+      "focusedBookIds": [
+        "a1506e9e-eb3c-4507-9fba-195d5e6e493c"
+      ],
+      "openedPageIds": [
+        "c5f5584e-ca21-4a58-9827-70a859dd76f9"
+      ]
+    },
+    {
+      "id": "cc472b3b-7df7-40ee-b9cb-6668c49f31df",
+      "focusedBookIds": [
+        "b47226d3-226b-4c79-91a3-095a2bddbdd3",
+        "d9c8360b-0811-4808-97ed-f1f65f208fed"
+      ],
+      "openedPageIds": [
+        "ce6be8c1-8de4-462c-8b51-094412bf42ea"
+      ]
+    },
+    {
+      "id": "488cee41-0f98-423e-8b92-ef5df91e2903",
+      "focusedBookIds": [
+        "f71d5f0e-7863-4ab6-8f24-1e1dea820bb5"
+      ],
+      "openedPageIds": [
+        "843fe53a-a75e-4d11-9dd4-018d758e2beb"
+      ]
+    },
+    {
+      "id": "4bf18c56-55e5-46dd-b308-0a9cb44c72f6",
+      "focusedBookIds": [
+        "490b560f-a9ee-43b8-b6a2-cfaa6b88d0bd",
+        "b47226d3-226b-4c79-91a3-095a2bddbdd3",
+        "f71d5f0e-7863-4ab6-8f24-1e1dea820bb5",
+        "d9c8360b-0811-4808-97ed-f1f65f208fed",
+        "a1506e9e-eb3c-4507-9fba-195d5e6e493c"
+      ]
+    }
+  ]
+}
