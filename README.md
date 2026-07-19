@@ -23,6 +23,7 @@ at [support@orgpad.info](mailto:support@orgpad.info).
     - [ID formats](#id-formats)
     - [Endpoint overview](#endpoint-overview)
     - [Reference pages](#reference-pages)
+    - [API changelog](changelog.md)
     - [API cookbook](cookbook.md)
     - [Common errors](#common-errors)
 
@@ -186,39 +187,43 @@ https://orgpad.info/api/v1
 Most OrgPage endpoints also support short-link paths. For example, `/o/{orgpage-id}/ops` can also be called as
 `/s/{short-link}/ops`.
 
-| Method   | Path                                                                                                         | Permission       | Description                                      | Reference                                                         |
-|----------|--------------------------------------------------------------------------------------------------------------|------------------|--------------------------------------------------|-------------------------------------------------------------------|
-| `GET`    | [`/public`](https://orgpad.info/api/v1/public)                                                               | view             | List public OrgPages and owners.                 | [Public OrgPage listing](read.md#public-orgpage-listing)          |
-| `GET`    | [`/o`](https://orgpad.info/api/v1/o)                                                                         | view             | List accessible OrgPages and owners.             | [OrgPage listing](read.md#orgpage-listing)                        |
-| `POST`   | [`/o`](https://orgpad.info/api/v1/o)                                                                         | admin            | Create a new OrgPage.                            | [Create OrgPage](management.md#create-orgpage)                    |
-| `GET`    | [`/o/{orgpage-id}`](https://orgpad.info/api/v1/o/{orgpage-id})                                               | view             | Load the full OrgPage.                           | [Read full OrgPage](read.md#read-full-orgpage)                    |
-| `DELETE` | [`/o/{orgpage-id}`](https://orgpad.info/api/v1/o/{orgpage-id})                                               | admin            | Delete an OrgPage.                               | [Delete OrgPage](management.md#delete-orgpage)                    |
-| `GET`    | [`/o/{orgpage-id}/meta`](https://orgpad.info/api/v1/o/{orgpage-id}/meta)                                     | view             | Load OrgPage metadata.                           | [Metadata](read.md#metadata)                                      |
-| `POST`   | [`/o/{orgpage-id}/ops`](https://orgpad.info/api/v1/o/{orgpage-id}/ops)                                       | edit             | Apply OrgPage operations.                        | [Operations endpoint](ops.md#operations-endpoint)                 |
-| `POST`   | [`/o/{orgpage-id}/upload`](https://orgpad.info/api/v1/o/{orgpage-id}/upload)                                 | edit             | Upload files and images.                         | [Upload files and images](attachments.md#upload-files-and-images) |
-| `POST`   | [`/o/{orgpage-id}/copy`](https://orgpad.info/api/v1/o/{orgpage-id}/copy)                                     | view + admin key | Copy an OrgPage.                                 | [Copy OrgPage](management.md#copy-orgpage)                        |
-| `GET`    | [`/o/{orgpage-id}/unit/{unit-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/unit/{unit-id})                 | view             | Load a unit and related objects.                 | [Unit](read.md#unit)                                              |
-| `GET`    | [`/o/{orgpage-id}/link/{link-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/link/{link-id})                 | view             | Load a link and its endpoint units.              | [Link](read.md#link)                                              |
-| `GET`    | [`/o/{orgpage-id}/file/{file-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/file/{file-id})                 | view             | Load a file and the pages or embeds that use it. | [File](read.md#file)                                              |
-| `GET`    | [`/o/{orgpage-id}/image/{image-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/image/{image-id})             | view             | Load an image and the pages that use it.         | [Image](read.md#image)                                            |
-| `GET`    | [`/o/{orgpage-id}/math/{math-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/math/{math-id})                 | view             | Load a math object and its page.                 | [Math](read.md#math)                                              |
-| `GET`    | [`/o/{orgpage-id}/embed/{embed-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/embed/{embed-id})             | view             | Load an embed and its page.                      | [Embed](read.md#embed)                                            |
-| `GET`    | [`/o/{orgpage-id}/path/{path-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/path/{path-id})                 | view             | Load a path and its steps.                       | [Path](read.md#path)                                              |
-| `GET`    | [`/o/{orgpage-id}/fragment/{fragment-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/fragment/{fragment-id}) | view             | Load a fragment.                                 | [Fragment](read.md#fragment)                                      |
-| `GET`    | [`/o/{orgpage-id}/share`](https://orgpad.info/api/v1/o/{orgpage-id}/share)                                   | admin            | Load OrgPage sharing state.                      | [Read sharing state](management.md#read-sharing-state)            |
-| `POST`   | [`/o/{orgpage-id}/share`](https://orgpad.info/api/v1/o/{orgpage-id}/share)                                   | admin            | Apply one sharing operation.                     | [Update sharing state](management.md#update-sharing-state)        |
+| Method   | Path                                                                                                         | Permission       | Description                                      | Reference                                                          |
+| -------- | ------------------------------------------------------------------------------------------------------------ | ---------------- | ------------------------------------------------ | ------------------------------------------------------------------ |
+| `GET`    | [`/info`](https://orgpad.info/api/v1/info)                                                                   | view             | Inspect the API key used by the request.         | [Authentication and API keys](auth.md#inspect-the-current-api-key) |
+| `GET`    | [`/public`](https://orgpad.info/api/v1/public)                                                               | view             | List public OrgPages and owners.                 | [Public OrgPage listing](read.md#public-orgpage-listing)           |
+| `GET`    | [`/o`](https://orgpad.info/api/v1/o)                                                                         | view             | List accessible OrgPages and owners.             | [OrgPage listing](read.md#orgpage-listing)                         |
+| `POST`   | [`/o`](https://orgpad.info/api/v1/o)                                                                         | admin            | Create a new OrgPage.                            | [Create OrgPage](management.md#create-orgpage)                     |
+| `GET`    | [`/o/{orgpage-id}`](https://orgpad.info/api/v1/o/{orgpage-id})                                               | view             | Load the full OrgPage.                           | [Read full OrgPage](read.md#read-full-orgpage)                     |
+| `DELETE` | [`/o/{orgpage-id}`](https://orgpad.info/api/v1/o/{orgpage-id})                                               | admin            | Delete an OrgPage.                               | [Delete OrgPage](management.md#delete-orgpage)                     |
+| `GET`    | [`/o/{orgpage-id}/meta`](https://orgpad.info/api/v1/o/{orgpage-id}/meta)                                     | view             | Load OrgPage metadata.                           | [Metadata](read.md#metadata)                                       |
+| `POST`   | [`/o/{orgpage-id}/ops`](https://orgpad.info/api/v1/o/{orgpage-id}/ops)                                       | edit             | Apply OrgPage operations.                        | [Operations endpoint](ops.md#operations-endpoint)                  |
+| `POST`   | [`/o/{orgpage-id}/upload`](https://orgpad.info/api/v1/o/{orgpage-id}/upload)                                 | edit             | Upload files and images.                         | [Upload files and images](attachments.md#upload-files-and-images)  |
+| `POST`   | [`/o/{orgpage-id}/copy`](https://orgpad.info/api/v1/o/{orgpage-id}/copy)                                     | view + admin key | Copy an OrgPage.                                 | [Copy OrgPage](management.md#copy-orgpage)                         |
+| `POST`   | [`/o/{orgpage-id}/screenshot`](https://orgpad.info/api/v1/o/{orgpage-id}/screenshot)                         | view             | Generate one PNG or WebP screenshot.             | [Screenshot an OrgPage](screenshot.md)                             |
+| `POST`   | [`/o/{orgpage-id}/print`](https://orgpad.info/api/v1/o/{orgpage-id}/print)                                   | view             | Generate one PDF printout.                       | [Print an OrgPage](print.md)                                       |
+| `GET`    | [`/o/{orgpage-id}/unit/{unit-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/unit/{unit-id})                 | view             | Load a unit and related objects.                 | [Unit](read.md#unit)                                               |
+| `GET`    | [`/o/{orgpage-id}/link/{link-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/link/{link-id})                 | view             | Load a link and its endpoint units.              | [Link](read.md#link)                                               |
+| `GET`    | [`/o/{orgpage-id}/file/{file-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/file/{file-id})                 | view             | Load a file and the pages or embeds that use it. | [File](read.md#file)                                               |
+| `GET`    | [`/o/{orgpage-id}/image/{image-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/image/{image-id})             | view             | Load an image and the pages that use it.         | [Image](read.md#image)                                             |
+| `GET`    | [`/o/{orgpage-id}/math/{math-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/math/{math-id})                 | view             | Load a math object and its page.                 | [Math](read.md#math)                                               |
+| `GET`    | [`/o/{orgpage-id}/embed/{embed-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/embed/{embed-id})             | view             | Load an embed and its page.                      | [Embed](read.md#embed)                                             |
+| `GET`    | [`/o/{orgpage-id}/path/{path-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/path/{path-id})                 | view             | Load a path and its steps.                       | [Path](read.md#path)                                               |
+| `GET`    | [`/o/{orgpage-id}/fragment/{fragment-id}`](https://orgpad.info/api/v1/o/{orgpage-id}/fragment/{fragment-id}) | view             | Load a fragment.                                 | [Fragment](read.md#fragment)                                       |
+| `GET`    | [`/o/{orgpage-id}/share`](https://orgpad.info/api/v1/o/{orgpage-id}/share)                                   | admin            | Load OrgPage sharing state.                      | [Read sharing state](management.md#read-sharing-state)             |
+| `POST`   | [`/o/{orgpage-id}/share`](https://orgpad.info/api/v1/o/{orgpage-id}/share)                                   | admin            | Apply one sharing operation.                     | [Update sharing state](management.md#update-sharing-state)         |
 | `GET`    | [`/file/{file-id}`](https://orgpad.info/api/v1/file/{file-id})                                               | view             | Load file metadata and accessible OrgPage IDs.   | [Attachment metadata](attachments.md#attachment-metadata)          |
 | `GET`    | [`/img/{image-id}`](https://orgpad.info/api/v1/img/{image-id})                                               | view             | Load image metadata and accessible OrgPage IDs.  | [Attachment metadata](attachments.md#attachment-metadata)          |
-| `POST`   | [`/file/{file-id}/rename`](https://orgpad.info/api/v1/file/{file-id}/rename)                                 | edit             | Rename a file in accessible OrgPages.            | [Rename files](attachments.md#rename-files)                       |
-| `POST`   | [`/img/{image-id}/rename`](https://orgpad.info/api/v1/img/{image-id}/rename)                                 | edit             | Rename an image in accessible OrgPages.          | [Rename images](attachments.md#rename-images)                     |
+| `POST`   | [`/file/{file-id}/rename`](https://orgpad.info/api/v1/file/{file-id}/rename)                                 | edit             | Rename a file in accessible OrgPages.            | [Rename files](attachments.md#rename-files)                        |
+| `POST`   | [`/img/{image-id}/rename`](https://orgpad.info/api/v1/img/{image-id}/rename)                                 | edit             | Rename an image in accessible OrgPages.          | [Rename images](attachments.md#rename-images)                      |
 
 For exact request bodies, response shapes, parameters, and examples, see the reference pages below.
 
 ### Reference pages
 
 | Page                                          | What it covers                                                                                           |
-|-----------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | [API cookbook](cookbook.md)                   | End-to-end examples for creating OrgPages, applying operations, uploading files, and using attachments.  |
+| [API changelog](changelog.md)                 | Additions and behavior changes, listed by release date.                                                  |
 | [Authentication and API keys](auth.md)        | API key format, creating keys, key scope, subscription requirements, and permissions.                    |
 | [Input and output formats](formats.md)        | JSON, EDN, Transit, naming rules, headers, and examples.                                                 |
 | [Errors](errors.md#how-to-debug-an-api-error) | Debugging workflow, error response format, HTTP status codes, and error-code index.                      |
@@ -230,4 +235,6 @@ For exact request bodies, response shapes, parameters, and examples, see the ref
 | [Operations](ops.md)                          | Applying changes to OrgPages with operation vectors.                                                     |
 | [Unit content in operations](ops_content.md)  | Content input formats, helper tags, appended content, and generated operations.                          |
 | [Attachments](attachments.md)                 | Uploading files and images, and renaming uploaded assets.                                                |
+| [Screenshot an OrgPage](screenshot.md)        | Generating one PNG or WebP image from an OrgPage.                                                        |
+| [Print an OrgPage](print.md)                  | Generating a PDF from an OrgPage or presentation path.                                                   |
 | [Malli schemas](schema.cljc)                  | Standalone Clojure/[Malli](https://github.com/metosin/malli) schemas for EDN request bodies.             |

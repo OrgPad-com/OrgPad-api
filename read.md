@@ -195,8 +195,8 @@ This endpoint retrieves metadata for [public OrgPages](https://orgpad.info/publi
 published with `permission/view`. The response contains only `orgpages` and `owners`, using the same field shapes as
 the [accessible OrgPage listing](#orgpage-listing).
 
-This endpoint requires a general API key with at least view permission. OrgPage-specific API keys cannot use this
-endpoint because it is not scoped to one OrgPage.
+This endpoint requires an API key with at least view permission. Both general and OrgPage-specific API keys can use it,
+because it only lists public OrgPages.
 
 ```http
 GET https://orgpad.info/api/v1/public
@@ -206,7 +206,8 @@ GET https://orgpad.info/api/v1/public
 
 This endpoint retrieves the full data structure for one OrgPage. It includes all units, links, files, images, and other
 objects. For the response structure and object field descriptions, see [OrgPage data](orgpage.md). It
-requires an API key with view permission, either general or scoped to the target OrgPage.
+requires an API key with view permission. An OrgPage-specific key can read its selected OrgPage, a public OrgPage, or
+an OrgPage authorized by a sharing token.
 
 ```http
 GET https://orgpad.info/api/v1/o/{orgpage-id}

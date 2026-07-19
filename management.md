@@ -60,13 +60,16 @@ EDN example response:
 {:orgpage/id #uuid "136a1f33-0113-41ac-aff6-f50542a3228a"}
 ```
 
+If the owner has an OrgPad dashboard open, the new OrgPage appears there without a manual refresh.
+
 If the body does not match the expected schema, the API returns `body-schema-error`. See
 [Request format and body errors](errors.md#request-format-and-body-errors).
 
 ## Delete OrgPage
 
 Deletes the target OrgPage. Requires admin permission from both the user account and the API key. Successful deletion
-returns `204 No Content`.
+returns `204 No Content`. Open dashboards are notified and clients currently viewing the deleted OrgPage are
+disconnected.
 
 ```http
 DELETE https://orgpad.info/api/v1/o/{orgpage-id}

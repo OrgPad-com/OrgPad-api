@@ -90,6 +90,8 @@
 ;; - file-rename: POST /api/v1/file/{file-id}/rename
 ;; - image-rename: POST /api/v1/img/{image-id}/rename
 ;; - permission-op: POST /api/v1/o/{orgpage-id}/share
+;; - screenshot-orgpage: POST /api/v1/o/{orgpage-id}/screenshot
+;; - print-orgpage: POST /api/v1/o/{orgpage-id}/print
 
 (def create-orgpage
   [:maybe
@@ -114,7 +116,8 @@
      [:orgpage/init-fragments {:optional true}
       [:map {:closed true}
        [:init-fragments/default {:optional true} [:maybe uuid-or-string?]]
-       [:init-fragments/small-screen {:optional true} [:maybe uuid-or-string?]]]]]]]
+       [:init-fragments/small-screen {:optional true} [:maybe uuid-or-string?]]
+       [:init-fragments/screenshot {:optional true} [:maybe uuid-or-string?]]]]]]]
 
    [:orgpage/remove-image
     [:tuple
@@ -483,3 +486,32 @@
     [:tuple
      [:= :permission/remove-user]
      id-or-email]]])
+
+(def screenshot-orgpage
+  [:maybe
+   [:map {:closed true}
+    [:screenshot/resolution {:optional true}
+     [:tuple [:int {:min 300 :max 4000}]
+      [:int {:min 300 :max 4000}]]]
+    [:screenshot/theme {:optional true} [:enum :light :dark]]
+    [:screenshot/fragment-id {:optional true} uuid-or-string?]
+    [:screenshot/open {:optional true} [:enum :all]]
+    [:screenshot/opened-page-ids {:optional true} [:set uuid-or-string?]]
+    [:screenshot/focused-book-ids {:optional true} [:set uuid-or-string?]]
+    [:screenshot/hidden-book-ids {:optional true} [:set uuid-or-string?]]]])
+
+(def print-orgpage
+  [:maybe
+   [:map {:closed true}
+    [:print/color {:optional true} [:enum :white :gray :dm]]
+    [:print/size {:optional true} [:enum :a4 :letter :ratio-4-to-3 :ratio-16-to-9]]
+    [:print/orientation {:optional true} [:enum :landscape :portrait]]
+    [:print/padding {:optional true} [:or [:int {:min 0 :max 500}]
+                                      [:tuple [:int {:min 0 :max 500}]
+                                       [:int {:min 0 :max 500}]]]]
+    [:print/path-id {:optional true} uuid-or-string?]
+    [:print/fragment-id {:optional true} uuid-or-string?]
+    [:print/open {:optional true} [:enum :all]]
+    [:print/opened-page-ids {:optional true} [:set uuid-or-string?]]
+    [:print/focused-book-ids {:optional true} [:set uuid-or-string?]]
+    [:print/hidden-book-ids {:optional true} [:set uuid-or-string?]]]])

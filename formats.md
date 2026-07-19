@@ -7,6 +7,8 @@ these docs. EDN and Transit are especially useful for Clojure and ClojureScript 
 ## Contents
 
 - [Request and Response Headers](#request-and-response-headers)
+- [Binary Screenshot Responses](#binary-screenshot-responses)
+- [Binary PDF Responses](#binary-pdf-responses)
 - [JSON and EDN Naming Rules](#json-and-edn-naming-rules)
 - [IDs and UUIDs](#ids-and-uuids)
 - [Text IDs](#text-ids)
@@ -43,6 +45,32 @@ not match the endpoint schema, the API returns `400` with `body-schema-error`.
 
 For request format errors, see [Request format and body errors](errors.md#request-format-and-body-errors). For the
 full error envelope, see [Error response format](errors.md#error-response-format).
+
+## Binary Screenshot Responses
+
+The [screenshot endpoint](screenshot.md) uses the same JSON, EDN, or Transit request body formats, but returns an
+image on success. Set `Accept` to `image/webp` or `image/png`; its default success format is `image/webp`.
+
+Include a structured format as a second acceptable value when a client needs to decode errors explicitly:
+
+```http
+Accept: image/webp, application/edn
+```
+
+With that header, a successful response has `Content-Type: image/webp`, while an error response has
+`Content-Type: application/edn`. If no structured error format is accepted, screenshot errors default to JSON.
+
+## Binary PDF Responses
+
+The [print endpoint](print.md) follows the same rule, but its only successful binary response is `application/pdf`.
+It defaults to PDF when `Accept` is omitted. For structured errors, include a normal API format:
+
+```http
+Accept: application/pdf, application/edn
+```
+
+On success the response is a PDF; on error it is EDN. If no structured error format is accepted, print errors default
+to JSON.
 
 ## JSON and EDN Naming Rules
 

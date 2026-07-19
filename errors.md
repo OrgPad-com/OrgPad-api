@@ -16,6 +16,8 @@ additional fields to find the next specific check.
 - [HTTP Status Codes](#http-status-codes)
 - [Authentication, Subscription, and Scope Errors](#authentication-subscription-and-scope-errors)
 - [Request Format and Body Errors](#request-format-and-body-errors)
+- [Screenshot Errors](#screenshot-errors)
+- [Print Errors](#print-errors)
 - [Route and Object Lookup Errors](#route-and-object-lookup-errors)
 - [ID and Operation Errors](#id-and-operation-errors)
 - [Unit, Book, Page, Link, and Path Errors](#unit-book-page-link-and-path-errors)
@@ -128,7 +130,7 @@ Common additional fields include:
 HTTP status codes describe the general result of the request.
 
 | Status                       | When it is returned                                                                                                          |
-|------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `200 OK`                     | Successful reads and most writes. Upload responses include per-file `errors` entries when some files failed.                 |
 | `201 Created`                | OrgPage creation and copy.                                                                                                   |
 | `204 No Content`             | Successful delete.                                                                                                           |
@@ -139,6 +141,8 @@ HTTP status codes describe the general result of the request.
 | `406 Not Acceptable`         | Unsupported `Accept` header.                                                                                                 |
 | `413 Payload Too Large`      | Upload exceeds the remaining storage quota.                                                                                  |
 | `415 Unsupported Media Type` | Unsupported `Content-Type` on a request that requires a body format.                                                         |
+| `502 Bad Gateway`            | The screenshot service could not produce an image.                                                                           |
+| `504 Gateway Timeout`        | The screenshot service did not respond within the allowed time.                                                              |
 
 The tables below group error codes by the part of request processing that returns them. Each table gives the immediate
 meaning of the code and the next documentation page or request field to inspect. For the full list of API routes, see
@@ -153,15 +157,15 @@ permission checks around each API handler.
 Permission errors compare the endpoint's required permission with two separate permissions: the OrgPad user account's
 permission on the target OrgPage and the API key's own permission. Both must satisfy the endpoint requirement.
 
-| Code                     | Status | Likely cause                                                                                            | Next check                                                                                                     |
-|--------------------------|--------|---------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| `invalid-authorization`  | `401`  | The `Authorization` header is missing or does not use the bearer token format.                          | Check [sending the API key](auth.md#send-the-api-key).                                                         |
-| `invalid-api-key`        | `401`  | The key ID is unknown, the secret is wrong, or only the key prefix was supplied.                        | Check the [API key format](auth.md#api-key-format).                                                            |
-| `expired-subscription`   | `403`  | The API key owner does not have active API access.                                                      | Check [subscription requirements](auth.md#subscription-requirements).                                          |
-| `orgpage-not-found`      | `404`  | The route target OrgPage does not exist, or the API user cannot view it.                                | Check the OrgPage ID and whether the user account can view the OrgPage.                                        |
-| `user-permission-denied` | `403`  | The user account does not have the permission required by the endpoint.                                 | Compare `requiredPermission` with `userPermission`, then check [permissions](auth.md#permissions-and-scope).   |
-| `key-permission-denied`  | `403`  | The API key permission is below the permission required by the endpoint.                                | Compare `requiredPermission` with `apiKeyPermission`, then check [permissions](auth.md#permissions-and-scope). |
-| `key-for-single-orgpage` | `403`  | An OrgPage-specific key was used on another OrgPage or on an endpoint that is not allowed for that key. | Check [OrgPage-specific keys](auth.md#orgpage-specific-keys).                                                  |
+| Code                     | Status | Likely cause                                                                                                        | Next check                                                                                                     |
+| ------------------------ | ------ | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `invalid-authorization`  | `401`  | The `Authorization` header is missing or does not use the bearer token format.                                      | Check [sending the API key](auth.md#send-the-api-key).                                                         |
+| `invalid-api-key`        | `401`  | The key ID is unknown, the secret is wrong, or only the key prefix was supplied.                                    | Check the [API key format](auth.md#api-key-format).                                                            |
+| `expired-subscription`   | `403`  | The API key owner does not have active API access.                                                                  | Check [subscription requirements](auth.md#subscription-requirements).                                          |
+| `orgpage-not-found`      | `404`  | The route target OrgPage does not exist, or the API user cannot view it.                                            | Check the OrgPage ID and whether the user account can view the OrgPage.                                        |
+| `user-permission-denied` | `403`  | The user account does not have the permission required by the endpoint.                                             | Compare `requiredPermission` with `userPermission`, then check [permissions](auth.md#permissions-and-scope).   |
+| `key-permission-denied`  | `403`  | The API key permission is below the permission required by the endpoint.                                            | Compare `requiredPermission` with `apiKeyPermission`, then check [permissions](auth.md#permissions-and-scope). |
+| `key-for-single-orgpage` | `403`  | An OrgPage-specific key was used outside its allowed read scope or on an endpoint that is not allowed for that key. | Check [OrgPage-specific keys](auth.md#orgpage-specific-keys).                                                  |
 
 ## Request Format and Body Errors
 
@@ -169,12 +173,12 @@ These errors are about response format negotiation, request content type, body p
 
 Request body errors happen after authentication, when the API parses and validates the declared request format.
 
-| Code                          | Status | Likely cause                                                     | Next check                                                                              |
-|-------------------------------|--------|------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| `unsupported-response-format` | `406`  | The `Accept` header does not allow JSON, EDN, Transit, or `*/*`. | Use a supported `Accept` value from [formats](formats.md#request-and-response-headers). |
-| `unsupported-content-type`    | `415`  | The request body has an unsupported `Content-Type`.              | Use `application/json` (default), `application/edn`, or `application/transit+json`.     |
-| `invalid-request-body`        | `400`  | The request body could not be parsed as the declared format.     | Check JSON/EDN/Transit syntax and string escaping.                                      |
-| `body-schema-error`           | `400`  | The parsed body does not match the endpoint schema.              | Inspect `schemaError`, then check the endpoint page or [Malli schemas](schema.cljc).    |
+| Code                          | Status | Likely cause                                                                    | Next check                                                                              |
+| ----------------------------- | ------ | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `unsupported-response-format` | `406`  | The `Accept` header does not allow a response format supported by the endpoint. | Use a supported `Accept` value from [formats](formats.md#request-and-response-headers). |
+| `unsupported-content-type`    | `415`  | The request body has an unsupported `Content-Type`.                             | Use `application/json` (default), `application/edn`, or `application/transit+json`.     |
+| `invalid-request-body`        | `400`  | The request body could not be parsed as the declared format.                    | Check JSON/EDN/Transit syntax and string escaping.                                      |
+| `body-schema-error`           | `400`  | The parsed body does not match the endpoint schema.                             | Inspect `schemaError`, then check the endpoint page or [Malli schemas](schema.cljc).    |
 
 Common `body-schema-error` causes include:
 
@@ -184,6 +188,28 @@ Common `body-schema-error` causes include:
 - A required field is missing.
 - A field has the wrong shape, such as a string where a vector is required.
 
+## Screenshot Errors
+
+These errors are specific to [screenshot generation](screenshot.md).
+
+| Code                            | Status | Likely cause                                                              | Next check                                                            |
+| ------------------------------- | ------ | ------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `screenshot-target-conflict`    | `400`  | More than one screenshot target was supplied.                             | Choose one target in the screenshot map.                              |
+| `screenshot-fragment-not-found` | `400`  | The explicit or implicit screenshot fragment target does not exist.       | Check [screenshot targets](screenshot.md#choose-a-screenshot-target). |
+| `screenshot-failed`             | `502`  | The screenshot service could not load the OrgPage or produce an image.    | Retry the request or contact support.                                 |
+| `screenshot-timeout`            | `504`  | The screenshot service did not produce the image within the allowed time. | Retry with a simpler target or resolution.                            |
+
+## Print Errors
+
+These errors are specific to [PDF generation](print.md).
+
+| Code                       | Status | Likely cause                                                            | Next check                                             |
+| -------------------------- | ------ | ----------------------------------------------------------------------- | ------------------------------------------------------ |
+| `print-target-conflict`    | `400`  | More than one print target was supplied.                                | Choose one target in the print map.                    |
+| `print-fragment-not-found` | `400`  | The explicit or implicit print fragment target does not exist.          | Check [print targets](print.md#choose-a-print-target). |
+| `print-failed`             | `502`  | The screenshot service could not load the OrgPage or produce a PDF.     | Retry the request or contact support.                  |
+| `print-timeout`            | `504`  | The screenshot service did not produce the PDF within the allowed time. | Retry with a simpler target or presentation.           |
+
 ## Route and Object Lookup Errors
 
 These errors mean the API could not resolve the route target or the object requested from an OrgPage.
@@ -191,14 +217,14 @@ These errors mean the API could not resolve the route target or the object reque
 Route-level errors happen before object-specific validation, because a route parameter does not resolve.
 
 | Code                 | Status | Likely cause                                                 | Next check                                                                     |
-|----------------------|--------|--------------------------------------------------------------|--------------------------------------------------------------------------------|
+| -------------------- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | `unknown-short-link` | `400`  | The `{short-link}` route target does not exist.              | Check the short link and the [endpoint overview](README.md#endpoint-overview). |
 | `unit-not-found`     | `400`  | The unit ID or text ID does not exist in the target OrgPage. | Check the [unit read endpoint](read.md#unit).                                  |
 | `link-not-found`     | `400`  | The link ID does not exist in the target OrgPage.            | Check the [link read endpoint](read.md#link).                                  |
 | `math-not-found`     | `400`  | The math ID does not exist in the target OrgPage.            | Check the [math read endpoint](read.md#math).                                  |
 | `embed-not-found`    | `400`  | The embed ID does not exist in the target OrgPage.           | Check the [embed read endpoint](read.md#embed).                                |
 | `path-not-found`     | `400`  | The path ID does not exist in the target OrgPage.            | Check the [path read endpoint](read.md#path).                                  |
-| `fragment-not-found` | `400`  | The fragment ID does not exist in the target OrgPage.        | Check the [fragment read endpoint](read.md#fragment).                          |
+| `fragment-not-found` | `400`  | The fragment does not exist in the target OrgPage.           | Check [fragments](orgpage.md#fragments).                                       |
 
 For object references inside operation bodies, also check [IDs and Text IDs](#id-and-operation-errors).
 

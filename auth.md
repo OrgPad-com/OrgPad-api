@@ -9,6 +9,7 @@ it securely.
 - [Subscription Requirements](#subscription-requirements)
 - [API Key Format](#api-key-format)
 - [Send the API Key](#send-the-api-key)
+- [Inspect the Current API Key](#inspect-the-current-api-key)
 - [Create and Manage API Keys](#create-and-manage-api-keys)
 - [Choose an API Key](#choose-an-api-key)
 - [Permissions and Scope](#permissions-and-scope)
@@ -70,6 +71,52 @@ A missing or malformed `Authorization` header returns `invalid-authorization` er
 An unknown API key or invalid secret returns `invalid-api-key` error. See the authentication
 [error](errors.md#authentication-subscription-and-scope-errors) section for the full list.
 
+## Inspect the Current API Key
+
+Use this endpoint to check the non-secret metadata of the API key that authenticated the request:
+
+```http
+GET https://orgpad.info/api/v1/info
+```
+
+For example:
+
+```bash
+curl "https://orgpad.info/api/v1/info" \
+  -H "Authorization: Bearer $ORGPAD_API_KEY" \
+  -H "Accept: application/json"
+```
+
+The response includes the key's `id`, `title`, `userId`, `permission`, and `creationTime`. It also includes
+`orgpageId` for an OrgPage-specific key and `lastUsed` after the key has been used. It never returns the key secret
+or its SHA-256 hash.
+
+JSON example response:
+
+```json
+{
+  "id": "fHbdk95-3Vg",
+  "title": "Reporting reader",
+  "userId": "50475d55-4f6d-401f-9b08-33927a04897f",
+  "orgpageId": "e7ff2b14-1894-4aad-aae0-cf5b08f9875e",
+  "permission": "permission/view",
+  "creationTime": "2026-07-18T11:21:46.931973Z",
+  "lastUsed": "2026-07-19T16:16:50.195098Z"
+}
+```
+
+EDN example response:
+
+```clojure
+{:api-key/id            "fHbdk95-3Vg"
+ :api-key/title         "Reporting reader"
+ :api-key/user-id       #uuid "50475d55-4f6d-401f-9b08-33927a04897f"
+ :api-key/orgpage-id    #uuid "e7ff2b14-1894-4aad-aae0-cf5b08f9875e"
+ :api-key/permission    :permission/view
+ :api-key/creation-time "2026-07-18T11:21:46.931973Z"
+ :api-key/last-used     "2026-07-19T16:16:50.195098Z"}
+```
+
 ## Create and Manage API Keys
 
 Create and manage API keys in OrgPad settings under [API](https://orgpad.info/settings/api).
@@ -77,8 +124,11 @@ Create and manage API keys in OrgPad settings under [API](https://orgpad.info/se
 When creating a key, choose:
 
 - **Name**: a required label used to identify the key later.
-- **Target OrgPage**: either all accessible OrgPages or one selected OrgPage.
+- **Target OrgPage**: all accessible OrgPages, one selected OrgPage, or *For a new OrgPage*.
 - **Permission**: view, edit, or admin.
+
+Choose *For a new OrgPage* when an integration needs its own isolated document. OrgPad creates an empty OrgPage and
+an OrgPage-specific key for it in one step.
 
 ![API key settings](img/api-key.png)
 
@@ -140,7 +190,7 @@ OrgPages where the key owner has only view permission.
 
 ### OrgPage-specific keys
 
-An OrgPage-specific key is limited to one selected OrgPage.
+An OrgPage-specific key is normally limited to one selected OrgPage.
 
 For OrgPage-specific keys, the available permission choices depend on the key owner's permission on that OrgPage:
 
@@ -148,20 +198,24 @@ For OrgPage-specific keys, the available permission choices depend on the key ow
 - Edit is available only when the key owner can edit the OrgPage.
 - Admin is available only when the key owner is an admin of the OrgPage.
 
-If an OrgPage-specific key is used outside its allowed OrgPage, the API returns `403` with `key-for-single-orgpage`
-[error](errors.md#authentication-subscription-and-scope-errors).
+An OrgPage-specific key can also read another OrgPage when that OrgPage is public or when a sharing token in the route
+authorizes view access. It can use the public OrgPage listing for the same reason. These exceptions are read-only: a
+sharing token does not let the key edit or manage another OrgPage.
+
+It cannot access your OrgPage listing or any other non-public OrgPage without a sharing token. Accessing these endpoints
+returns `403` with `key-for-single-orgpage` [error](errors.md#authentication-subscription-and-scope-errors).
 
 ### Permission errors
 
 Permission failures use different error codes depending on what failed:
 
-| Code                     | Status | What to check                                                 |
-|--------------------------|--------|---------------------------------------------------------------|
-| `orgpage-not-found`      | `404`  | The OrgPage does not exist, or the key owner cannot view it.  |
-| `user-permission-denied` | `403`  | The key owner does not have enough permission on the OrgPage. |
-| `key-permission-denied`  | `403`  | The API key does not have the required permission level.      |
-| `key-for-single-orgpage` | `403`  | An OrgPage-specific key was used outside its allowed OrgPage. |
-| `expired-subscription`   | `403`  | The key owner does not have active API access.                |
+| Code                     | Status | What to check                                                                               |
+| ------------------------ | ------ | ------------------------------------------------------------------------------------------- |
+| `orgpage-not-found`      | `404`  | The OrgPage does not exist, or the key owner cannot view it.                                |
+| `user-permission-denied` | `403`  | The key owner does not have enough permission on the OrgPage.                               |
+| `key-permission-denied`  | `403`  | The API key does not have the required permission level.                                    |
+| `key-for-single-orgpage` | `403`  | An OrgPage-specific key was used outside its allowed read scope or on an unscoped endpoint. |
+| `expired-subscription`   | `403`  | The key owner does not have active API access.                                              |
 
 For troubleshooting details, see [Authentication, subscription, and scope errors](errors.md#authentication-subscription-and-scope-errors).
 
