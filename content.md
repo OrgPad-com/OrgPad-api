@@ -207,7 +207,7 @@ In Hiccup:
 ```clojure
 [[:p "In OrgPad, it is possible to "
   [:mark {:mark/color :color/yellow} "highlight text"] " with "
-  [:mark {:mark/color :color/orchid} "12 different colors"] " using "
+  [:mark {:mark/color :color/orchid} "14 different colors"] " using "
   [:mark {:mark/color :color/green} "mark tags"] "."]]
 ```
 

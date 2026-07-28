@@ -197,7 +197,7 @@ allowed by the API key, a supplied token, or a token parsed from the referenced 
 ### Text highlighting helpers
 
 OrgPad does not support changing text color in unit content. The CSS `color` style is ignored. It supports text
-highlighting by changing allows the background color to one of [spectrum OrgPad colors](orgpage.md#colors).
+highlighting by changing the background color to one of the [supported OrgPad highlight colors](orgpage.md#colors).
 
 Direct text highlighting uses the stored `mark` [tag](content.md#text-highlighting). This helper does not reference any
 external object and does not generate additional operations. In HTML, the `color` attribute can use either the short
@@ -215,8 +215,11 @@ In Hiccup, `:color` accepts a color string and `:mark/color` accepts a namespace
 [:mark {:mark/color :color/pink} "Pink text"]
 ```
 
-Mark colors must be [OrgPad spectrum colors](orgpage.md#colors). Invalid mark colors return the `invalid-mark-color`
+Mark colors must be one of the [supported OrgPad highlight colors](orgpage.md#colors). Invalid mark colors return the `invalid-mark-color`
 [error](errors.md#content-format-errors).
+
+`color/light-gray` is the more subtle grayscale highlight, closer to the cell background. `color/gray` is the more
+visible grayscale highlight. In dark mode, OrgPad reverses their rendered shades so `color/gray` is the lighter one.
 
 The API also converts detected background styles into `mark` tags. It reads `background-color` and `background` styles,
 parses the color, and replaces the styled element with a `mark` whose color is the nearest OrgPad unit background color

@@ -847,8 +847,8 @@ See the visual [list of OrgPad colors](https://orgpad.info/s/colors).
 
 Units and links support all 15 colors.
 
-OrgPages and text highlights support only the 12 spectrum colors: all colors except `color/white`, `color/light-gray`,
-and `color/gray`.
+OrgPages support only the 12 spectrum colors: all colors except `color/white`, `color/light-gray`, and `color/gray`.
+Text highlights also support `color/light-gray` and `color/gray`.
 
 ## Related Pages
 

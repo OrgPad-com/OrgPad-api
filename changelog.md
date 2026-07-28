@@ -3,6 +3,11 @@
 Changes to the experimental OrgPad API are listed here in reverse chronological order. For complete request and
 response details, follow the links in each entry.
 
+## 2026-07-28
+
+- Text `mark` highlights now also support `color/light-gray` and `color/gray`. See
+  [Text highlighting](ops_content.md#text-highlighting-helpers).
+
 ## 2026-07-20
 
 - Added `GET /api/v1/info`, which returns non-secret metadata for the API key used by the request. See
