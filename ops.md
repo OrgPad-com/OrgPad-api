@@ -1155,6 +1155,8 @@ EDN:
 Possible `orgpage/remove-image` operation-specific [errors](errors.md#image-file-video-and-audio-errors):
 
 - `image-not-found`: the image does not exist or cannot be accessed with the API key.
+- `video-poster`: the image is a generated video poster. Remove its video file instead; the poster is removed
+  automatically.
 
 ### Adding attached files
 
@@ -1196,6 +1198,9 @@ It is also possible to directly use a file inside [unit content](ops_content.md)
 
 If the API key has access to the file, the corresponding `orgpage/add-file` is automatically generated.
 
+Each added video file has an automatically generated poster image of its first visible frame. The API automatically
+adds that poster image to the OrgPage as well. Do not add the poster separately.
+
 Possible `orgpage/add-file` operation-specific [errors](errors.md#image-file-video-and-audio-errors):
 
 - `file-not-found`: the file does not exist or cannot be accessed with the API key or token.
@@ -1207,7 +1212,8 @@ Attached files are removed with `orgpage/remove-file`. The file is preserved in 
 - `id` (**required**): ID of the file removed from the OrgPage.
 
 Removing a file also adds `unit/update` operations removing it from all unit contents and `embed/remove` operations for
-all embeds that reference the file.
+all embeds that reference the file. Removing a video file also adds `orgpage/remove-image` for its generated poster.
+A generated poster cannot be removed while its video remains attached; this returns the `video-poster` error.
 
 JSON:
 

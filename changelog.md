@@ -3,6 +3,14 @@
 Changes to the experimental OrgPad API are listed here in reverse chronological order. For complete request and
 response details, follow the links in each entry.
 
+## 2026-08-16
+
+- Video uploads now generate a poster image from the first visible frame. When `orgpage/add-file` adds a video, the
+  API automatically adds its poster image to the OrgPage; removing the video removes the poster as well. A generated
+  poster cannot be removed while its video remains attached and returns the `video-poster` error. See
+  [adding attached files](ops.md#adding-attached-files), [removing attached files](ops.md#removing-attached-files),
+  and [removing attached images](ops.md#removing-attached-images).
+
 ## 2026-07-28
 
 - Text `mark` highlights now also support `color/light-gray` and `color/gray`. See
