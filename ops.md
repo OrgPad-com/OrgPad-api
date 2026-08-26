@@ -319,7 +319,7 @@ For books, `unit/create` accepts these fields:
 - `childUnitIds` (**required**): vector of page IDs or text IDs contained in the book. Each referenced page must be
   created in the same operation batch and must point back to this book through its `parentId`. Existing pages cannot be
   moved from another book by creating a new book with their IDs.
-- `title` (optional): book title.
+- `title` (optional): book title. It must not be an empty string.
 - `props` (optional): visual properties of the book.
   - `titleSize` is `props/h1`, `props/h2`, or `props/h3`. When omitted, it defaults to `props/h2`.
   - `color` is one of the supported [OrgPad colors](orgpage.md#colors). When omitted, it defaults to `color/blue`.
@@ -460,7 +460,7 @@ single page with one operation. This operation has no `type` field and accepts t
   replacement in the same operation batch and in future operations.
 - `pos` (**required**): position of the book on the canvas as `[x, y]`. Both coordinates are floats between -1,000,000
   and 1,000,000. The `x` coordinate grows to the right and the `y` coordinate grows downward.
-- `title` (optional): book title.
+- `title` (optional): book title. It must not be an empty string.
 - `content` (optional): page content. In JSON, this is usually an HTML string. In EDN, this is usually vector
   of [Hiccup nodes](ops_content.md#hiccup). For details, see [Unit content in operations](ops_content.md).
 - `contentType` (optional): content format. Supported values are `hiccup`, `html`, `plain`, and `markdown`. For JSON,
@@ -524,7 +524,8 @@ Units are updated with `unit/update` operations. The operation updates the title
 unit. It accepts these fields:
 
 - `id` (**required**): ID or text ID of the updated unit.
-- `title` (optional): new book title. Use `null` in JSON or `nil` in EDN to remove the title.
+- `title` (optional): new book title. It must not be an empty string; use `null` in JSON or `nil` in EDN to remove
+  the title.
 - `textId` (optional): new text ID for the unit. It must be unique within the OrgPage. Use `null` in JSON or `nil` in
   EDN to remove the text ID.
 - `content` (optional): new page content. Use `null` in JSON or `nil` in EDN to clear the page content. For details, see
@@ -1038,7 +1039,7 @@ not individual cells. Refer to [OrgPage data](orgpage.md#orgpage-data), [Images]
 
 OrgPage metadata is updated with `orgpage/update-meta` operations. It accepts these fields:
 
-- `title` (optional): new OrgPage title.
+- `title` (optional): new OrgPage title. It must not be an empty string.
 - `description` (optional): new OrgPage description.
 - `tags` (optional): set of OrgPage tags.
 - `color` (optional): OrgPage color. It is one of the supported [OrgPage colors](orgpage.md#colors), excluding

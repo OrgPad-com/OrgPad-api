@@ -3,6 +3,22 @@
 Changes to the experimental OrgPad API are listed here in reverse chronological order. For complete request and
 response details, follow the links in each entry.
 
+## 2026-08-24
+
+- Image thumbnails are always encoded as AVIF. Image metadata no longer includes
+  `:image/thumbnail-format`.
+
+## 2026-08-21
+
+- Empty strings are no longer accepted as OrgPage or unit titles. Omit an OrgPage title to create an untitled OrgPage;
+  use `null` in JSON or `nil` in EDN to remove a unit title. See [Managing OrgPages](management.md#create-orgpage) and
+  [unit operations](ops.md#unit-operations).
+
+## 2026-08-20
+
+- Image uploads also recognize AVIF, HEIC, HEIF, BMP, ICO, and JPEG XL (JXL) as image attachments. See
+  [Upload Files and Images](attachments.md#upload-files-and-images).
+
 ## 2026-08-16
 
 - Video uploads now generate a poster image from the first visible frame. When `orgpage/add-file` adds a video, the

@@ -45,6 +45,7 @@ EDN body:
 
 All four input fields are optional. To create an OrgPage with default metadata, omit the request body or send JSON
 `null`. In EDN, send `nil`. If `color` is omitted, OrgPad uses `color/blue`.
+When supplied, `title` must not be an empty string.
 
 JSON example response:
 

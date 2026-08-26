@@ -95,7 +95,6 @@ Image metadata in EDN format:
  :image/width            1280
  :image/height           853
  :image/format           "jpg"
- :image/thumbnail-format "jpg"
  :image/size             208764
  :image/last-modified    "2026-05-14T13:46:12.863945Z"
  :image/url              "https://dr282zn36sxxg.cloudfront.net/…"
@@ -160,9 +159,9 @@ OrgPad separates recognized images from generic files in the response:
 - `errors` contains per-file upload errors. The API returns `200` when accepted files were stored, even if some upload
   parts failed and appear here.
 
-Image detection uses both the content type and the file format. Recognized image formats are PNG, JPEG, GIF, SVG,
-TIFF, and WebP. A recognized image fails processing when the file is invalid, corrupted, unsupported by the server, or
-cannot be resized.
+Image detection uses both the content type and the file format. Recognized image formats are PNG, JPEG/JPG, GIF, SVG,
+TIFF, WebP, AVIF, HEIC, HEIF, BMP, ICO, and JPEG XL (JXL). A recognized image fails processing when the file is
+invalid, corrupted, unsupported by the server, or cannot be resized.
 
 The third part in the example intentionally declares a video as an image to show how per-file upload errors are
 returned. Generated IDs, tokens, timestamps, dimensions, and sizes vary between requests.
@@ -258,7 +257,6 @@ EDN example response:
            :image/width            1050
            :image/height           700
            :image/format           "jpg"
-           :image/thumbnail-format "jpg"
            :image/size             102117
            :image/last-modified    "2026-05-14T13:46:12.867321Z"
            :image/thumbnail-sizes  [{:thumbnail/width  1050
@@ -629,7 +627,6 @@ EDN example dry-run response:
                 :image/width            1050
                 :image/height           700
                 :image/format           "jpg"
-                :image/thumbnail-format "jpg"
                 :image/size             102117
                 :image/last-modified    "2026-05-14T13:46:12.867321Z"
                 :image/thumbnail-sizes  [{:thumbnail/width  1050
@@ -655,7 +652,6 @@ EDN example dry-run response:
                                      :image/width            1050
                                      :image/height           700
                                      :image/format           "jpg"
-                                     :image/thumbnail-format "jpg"
                                      :image/size             102117
                                      :image/last-modified    "2026-05-14T13:46:12.867321Z"
                                      :image/thumbnail-sizes  [{:thumbnail/width  1050

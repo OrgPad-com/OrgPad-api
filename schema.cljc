@@ -96,7 +96,7 @@
 (def create-orgpage
   [:maybe
    [:map {:closed true}
-    [:orgpage/title {:optional true} [:string {:max max-title-length}]]
+    [:orgpage/title {:optional true} [:string {:min 1 :max max-title-length}]]
     [:orgpage/description {:optional true} [:string {:max max-description-length}]]
     [:orgpage/tags {:optional true} [:set {:max max-tags}
                                      [:string {:max max-tag-length}]]]
@@ -108,7 +108,7 @@
     [:tuple
      [:= :orgpage/update-meta]
      [:map {:closed true}
-     [:orgpage/title {:optional true} [:string {:max max-title-length}]]
+     [:orgpage/title {:optional true} [:string {:min 1 :max max-title-length}]]
      [:orgpage/description {:optional true} [:string {:max max-description-length}]]
      [:orgpage/tags {:optional true} [:set {:max max-tags}
                                       [:string {:max max-tag-length}]]]
@@ -158,7 +158,7 @@
         [:unit/type [:= :unit/book]]
         [:unit/pos canvas-pos]
         [:unit/child-unit-ids [:vector uuid-or-string?]]
-        [:unit/title {:optional true} :string]
+        [:unit/title {:optional true} [:string {:min 1}]]
         [:unit/props {:optional true}
          [:map {:closed true}
           [:props/color {:optional true} all-colors-enum]
@@ -177,7 +177,7 @@
         [:unit/id {:optional true} uuid-or-string?]
         [:unit/page-id {:optional true} uuid-or-string?]
         [:unit/pos canvas-pos]
-        [:unit/title {:optional true} :string]
+        [:unit/title {:optional true} [:string {:min 1}]]
         [:unit/content {:optional true} :any]
         [:unit/content-type {:optional true} unit-content-type]
         [:unit/props {:optional true}
@@ -192,7 +192,7 @@
      [:= :unit/update]
      [:map {:closed true}
      [:unit/id {:optional true} uuid-or-string?]
-     [:unit/title {:optional true} [:maybe :string]]
+     [:unit/title {:optional true} [:maybe [:string {:min 1}]]]
      [:unit/content {:optional true} [:maybe :any]]
      [:unit/appended-content {:optional true} :any]
      [:unit/content-type {:optional true} unit-content-type]

@@ -561,8 +561,9 @@ or `video/webm`. Playable audio files use `audio/mpeg`, `audio/wav`, `audio/ogg`
 Images are uploaded image attachments. An image can be used by multiple OrgPages; the same image ID may appear in each
 OrgPage that references it.
 
-OrgPad stores these formats as images: PNG, JPEG/JPG, GIF, SVG, TIFF, and WebP. Other image formats can still be
-uploaded, but they are stored as generic [files](#files), not image attachments.
+OrgPad stores these formats as images: PNG, JPEG/JPG, GIF, SVG, TIFF, WebP, AVIF, HEIC, HEIF, BMP, ICO, and JPEG XL
+(JXL). Other image formats can still be uploaded, but they are stored as generic [files](#files), not image
+attachments.
 
 Unit content references images through `<img src="…">` in JSON HTML content or an `[:img {:src "…"}]` Hiccup node
 in EDN content.
@@ -617,7 +618,6 @@ In EDN format:
  :image/width            540
  :image/height           540
  :image/format           "png"
- :image/thumbnail-format "png"
  :image/size             10792
  :image/last-modified    "2026-05-13T10:21:36.156948376Z"
  :image/url              "https://dr282zn36sxxg.cloudfront.net/…"

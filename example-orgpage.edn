@@ -167,7 +167,6 @@
                            :image/width            540,
                            :image/height           540,
                            :image/format           "png",
-                           :image/thumbnail-format "png",
                            :image/size             10792,
                            :image/last-modified    "2026-05-13T10:21:36.156948376Z",
                            :image/url              "https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A3db24f8f7a547d0c3566f2662de05eff447bfd4bf5996dee1e4010c4%2BIMAGE_TINY%2BIMAGE_TINY.1",

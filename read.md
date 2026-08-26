@@ -758,7 +758,6 @@ In EDN format:
                    :image/width            540
                    :image/height           540
                    :image/format           "png"
-                   :image/thumbnail-format "png"
                    :image/size             10792
                    :image/last-modified    "2026-05-13T10:21:36.156948376Z"
                    :image/url              "https://dr282zn36sxxg.cloudfront.net/…"
