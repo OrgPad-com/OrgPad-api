@@ -1242,8 +1242,13 @@ Possible `orgpage/remove-file` operation-specific [errors](errors.md#image-file-
 Math operations manage rendered math objects referenced from page content. Refer to [Maths](orgpage.md#maths) for their
 fields.
 
+An operations request may contain at most one `math/create` or `math/update` operation for each math ID. Combine
+changes for the same math object into a single operation; this also applies when creating and updating it in the same
+request. Otherwise, the request fails with `multiple-math-operations`.
+
 - [Creating math](#creating-math)
 - [Updating math](#updating-math)
+- [Setting math macros](#setting-math-macros)
 - [Removing math](#removing-math)
 
 ### Creating math
@@ -1325,6 +1330,7 @@ Possible `math/create` operation-specific [errors](errors.md#math-embed-youtube-
 - `missing-math-source`: a math object created from content is missing source.
 - `invalid-math-source`: math source cannot be rendered.
 - `duplicate-math-id`: multiple math objects created from content use the same ID.
+- `multiple-math-operations`: more than one `math/create` or `math/update` operation uses the same ID.
 - `multiple-math-sources`: the same math ID has one source in content and a different source in `math/create`.
 - `missing-math-in-content`: the created math object is not referenced from its page content.
 
@@ -1368,9 +1374,49 @@ EDN example:
 Possible `math/update` operation-specific [errors](errors.md#math-embed-youtube-and-orgpage-embed-errors):
 
 - `invalid-math-source`: LaTeX math source cannot be rendered using [MathJax](https://www.mathjax.org/).
+- `multiple-math-operations`: more than one `math/create` or `math/update` operation uses the same ID.
 - `multiple-math-sources`: the same math ID has one source in content and a different source in `math/update`.
 - `missing-math-in-content`: the updated math object is not referenced from its page content.
 - `math-linked-to-different-page`: the updated page content references a math object linked to a different page.
+
+### Setting math macros
+
+Math macros are OrgPage-wide LaTeX definitions. OrgPad prepends them when rendering every math formula in the OrgPage,
+so they can define notation shared across its pages. They are stored in the OrgPage's `mathMacros` field in JSON and
+`:orgpage/math-macros` in EDN.
+
+Set or replace them with `math/set-macros`. It accepts one field:
+
+- `macros` (**required**): a non-empty string of LaTeX macro definitions. Use `null` in JSON or `nil` in EDN to remove
+  the existing macros.
+
+JSON example:
+
+```json
+[
+  [
+    "math/set-macros",
+    {
+      "macros": "\\def\\V#1{\\boldsymbol{#1}}"
+    }
+  ]
+]
+```
+
+EDN example:
+
+```clojure
+[[:math/set-macros {:math/macros "\\def\\V#1{\\boldsymbol{#1}}"}]]
+```
+
+An operations request may contain at most one `math/set-macros` operation. When it is present, OrgPad renders every
+math formula affected by the request with the new macros, including unchanged existing formulas. The request is
+rejected if the macros or any resulting formula cannot be rendered.
+
+Possible `math/set-macros` operation-specific [errors](errors.md#math-embed-youtube-and-orgpage-embed-errors):
+
+- `multiple-math-macros`: the request contains more than one `math/set-macros` operation.
+- `invalid-math-source`: the macro definitions or a formula rendered with them cannot be rendered.
 
 ### Removing math
 

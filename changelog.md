@@ -3,6 +3,15 @@
 Changes to the experimental OrgPad API are listed here in reverse chronological order. For complete request and
 response details, follow the links in each entry.
 
+## 2026-10-22
+
+- Added the `math/set-macros` operation for setting OrgPage-wide LaTeX macro definitions. Updating macros re-renders
+  affected formulas and rejects the request if the new macros make any formula invalid. OrgPage API responses now
+  include the optional `mathMacros` field. See [Math Operations](ops.md#setting-math-macros) and
+  [OrgPage metadata](orgpage.md#orgpage-metadata).
+- An operations request may contain at most one `math/create` or `math/update` operation per math ID. Combine changes
+  into one operation to avoid the `multiple-math-operations` error. See [Math Operations](ops.md#math-operations).
+
 ## 2026-08-24
 
 - Image thumbnails are always encoded as AVIF. Image metadata no longer includes

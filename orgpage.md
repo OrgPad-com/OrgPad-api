@@ -67,6 +67,7 @@ below.
     "data"
   ],
   "color": "color/purple",
+  "mathMacros": "\\def\\V#1{\\boldsymbol{#1}}",
   "initFragments": {
     "default": "361e0937-4876-4600-8815-39cae4bdbc96",
     "smallScreen": "1a23f4b4-d1ca-49e3-9741-d4811f899f8d"
@@ -95,6 +96,7 @@ In EDN, the same top-level data uses namespaced keys and keyword values:
  :orgpage/description    "A simple OrgPad created to showcase what OrgPad data looks like."
  :orgpage/tags           #{"example" "API" "OrgPad" "data"}
  :orgpage/color          :color/purple
+ :orgpage/math-macros    "\\def\\V#1{\\boldsymbol{#1}}"
  :orgpage/init-fragments #:init-fragments{:default      #uuid"361e0937-4876-4600-8815-39cae4bdbc96"
                                           :small-screen #uuid"1a23f4b4-d1ca-49e3-9741-d4811f899f8d"}
  :orgpage/owner          #uuid "50475d55-4f6d-401f-9b08-33927a04897f"
@@ -119,6 +121,8 @@ Metadata fields:
 - `description`: OrgPage description.
 - `tags`: OrgPage tags.
 - `color`: OrgPage color.
+- `mathMacros`: optional OrgPage-wide LaTeX macro definitions prepended when rendering each math formula. Use
+  [`math/set-macros`](ops.md#setting-math-macros) to change them.
 - `initFragments`: fragments automatically displayed when OrgPage loads. `default` loads on desktop and tablet
   devices, `smallScreen` on mobile devices.
 - `owner`: ID of the OrgPage owner.
