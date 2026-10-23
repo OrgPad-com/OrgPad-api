@@ -183,6 +183,6 @@ Use these pages when formats connect to request bodies, IDs, content, or error h
 | [Unit content in operations](ops_content.md)       | Send HTML, Hiccup, Markdown, helper tags, files, embeds, and math.           |
 | [OrgPage data](orgpage.md)                         | Understand full OrgPage response data and object fields.                     |
 | [OrgPad UUID formats](uuid.md)                     | Understand standard UUIDs, compact IDs, and ID conversion.                   |
-| [Malli schemas](schema.cljc)                       | Validate EDN request bodies with [Malli](https://github.com/metosin/malli).  |
+| [Schemas and TypeScript types](schema.md)          | Validate EDN request bodies with [Malli](https://github.com/metosin/malli).  |
 | [Errors](errors.md#request-format-and-body-errors) | Fix `Accept`, `Content-Type`, parsing, and schema errors.                    |
 | [API overview](README.md)                          | Start from the quick start and endpoint map before choosing request formats. |

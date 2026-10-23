@@ -51,7 +51,6 @@ Image metadata in JSON format:
   "width": 1280,
   "height": 853,
   "format": "jpg",
-  "thumbnailFormat": "jpg",
   "size": 208764,
   "lastModified": "2026-05-14T13:46:12.863945Z",
   "url": "https://dr282zn36sxxg.cloudfront.net/…",
@@ -106,6 +105,8 @@ Image metadata in EDN format:
                            :thumbnail/size   46379}]
  :image/orgpage-ids      #{#uuid "136a1f33-0113-41ac-aff6-f50542a3228a"}}
 ```
+
+The image metadata endpoint filters out `thumbnailFormat`; do not rely on that field being present.
 
 Attachment timestamp fields, such as `lastModified` in JSON and `:file/last-modified` or `:image/last-modified` in EDN,
 are returned as UTC ISO datetime strings.
@@ -456,9 +457,13 @@ Response fields:
 
 - `file`: resulting file object. If a replacement file was created, this is the replacement file.
 - `oldFileId`: present only when a replacement file was created. It contains the original file ID.
+- `poster` and `oldPosterId`: present when a replacement video poster is created; they contain the new poster metadata
+  and the original poster ID.
 - `fileOps`: attachment-level operations that were applied, or that dry-run mode lists without applying.
 - `orgpageOps`: content operations grouped by OrgPage ID. These update file links, embeds, and video/audio sources.
 - `dryRun`: present and `true` only when `?dry-run=true` is used.
+
+In a dry run, a newly computed replacement file or poster has no new access token.
 
 [Errors](errors.md#image-file-video-and-audio-errors):
 

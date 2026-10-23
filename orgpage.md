@@ -672,7 +672,8 @@ image when a smaller thumbnail is enough.
 - `filename`: original or current image file name.
 - `width` and `height`: full image dimensions in pixels.
 - `format`: image format, such as `png` or `jpg`.
-- `thumbnailFormat`: format used for generated thumbnails.
+- `thumbnailFormat`: format used for generated thumbnails, when present. The image metadata endpoint does not include
+  this field in its filtered response.
 - `size`: size in bytes of the main image without thumbnails.
 - `url`: URL from which the image was downloaded. It will be missing when uploaded using API.
 - `thumbnailSizes`: available generated thumbnail variants with their width, height, and size in bytes.

@@ -1,7 +1,13 @@
 # API Changelog
 
-Changes to the experimental OrgPad API are listed here in reverse chronological order. For complete request and
-response details, follow the links in each entry.
+Changes to the OrgPad API are listed here in reverse chronological order. For complete request and response details,
+follow the links in each entry.
+
+## 2026-10-23
+
+- Added TypeScript types and JSON Schema definitions for documented API request and response bodies. Extended the
+  public Malli EDN schemas with response bodies, shared response objects, and route-schema registries. See
+  [Schemas and TypeScript types](schema.md).
 
 ## 2026-10-22
 
@@ -60,4 +66,4 @@ response details, follow the links in each entry.
   PDF, support dry runs and the same fragment targets as screenshots, and can print every step of a presentation path
   into one document. See [Print an OrgPage](print.md).
 - Added the public `screenshot-orgpage` and `print-orgpage` Malli request-body schemas. See
-  [Malli schemas](schema.cljc).
+  [Schemas and TypeScript types](schema.md).

@@ -1,5 +1,5 @@
 (ns orgpad.api.schema
-  "Public Malli schemas for OrgPad API EDN request bodies.")
+  "Public Malli schemas for OrgPad API EDN request and response bodies.")
 
 (def max-title-length 200)
 (def max-description-length 2000)
@@ -310,6 +310,12 @@
      [:map {:closed true}
       [:math/id uuid-or-string?]]]]
 
+   [:math/set-macros
+    [:tuple
+     [:= :math/set-macros]
+     [:map {:closed true}
+      [:math/macros [:maybe [:string {:min 1}]]]]]]
+
    [:embed/create
     [:tuple
      [:= :embed/create]
@@ -515,3 +521,420 @@
     [:print/opened-page-ids {:optional true} [:set uuid-or-string?]]
     [:print/focused-book-ids {:optional true} [:set uuid-or-string?]]
     [:print/hidden-book-ids {:optional true} [:set uuid-or-string?]]]])
+
+;; Response body schemas
+;;
+;; The API serializes these EDN-shaped values to JSON when application/json is
+;; requested. JSON field names are documented by the corresponding TypeScript
+;; types and api.schema.json. No schema is provided for multipart requests,
+;; binary successes, or successful 204 responses.
+
+(def no-body
+  "Routes without a request body."
+  [:maybe :nil])
+
+(def api-error
+  "All API error responses have these fields. Error-code-specific detail keys
+  are intentionally open; see errors.types.ts for their discriminated shapes."
+  [:map
+   [:error
+    [:map
+     [:code keyword?]
+     [:message :string]
+     [:docs :string]]]])
+
+(defn api-response
+  "The union of a successful EDN response body and the shared error envelope."
+  [success]
+  [:or success api-error])
+
+(def utc-timestamp :string)
+
+(def user
+  [:map {:closed true}
+   [:user/id uuid-or-string?]
+   [:user/first-name {:optional true} :string]
+   [:user/last-name {:optional true} :string]])
+
+(def init-fragments
+  [:map {:closed true}
+   [:init-fragments/default {:optional true} uuid-or-string?]
+   [:init-fragments/small-screen {:optional true} uuid-or-string?]
+   [:init-fragments/screenshot {:optional true} uuid-or-string?]])
+
+(def orgpage-metadata
+  [:map {:closed true}
+   [:orgpage/id uuid-or-string?]
+   [:orgpage/title {:optional true} :string]
+   [:orgpage/description {:optional true} :string]
+   [:orgpage/tags {:optional true} [:set :string]]
+   [:orgpage/color spectrum-colors-enum]
+   [:orgpage/owner uuid-or-string?]
+   [:orgpage/creation-time utc-timestamp]
+   [:orgpage/last-load-time {:optional true} utc-timestamp]
+   [:orgpage/last-edit-time {:optional true} utc-timestamp]
+   [:orgpage/math-macros {:optional true} :string]
+   [:orgpage/init-fragments {:optional true} init-fragments]])
+
+(def response-unit-props
+  [:map {:closed true}
+   [:props/color all-colors-enum]
+   [:props/title-size title-sizes]])
+
+(def book
+  [:map {:closed true}
+   [:unit/id uuid-or-string?]
+   [:unit/text-id {:optional true} string-uuid-or-text-id]
+   [:unit/type [:= :unit/book]]
+   [:unit/title {:optional true} :string]
+   [:unit/pos canvas-pos]
+   [:unit/child-unit-ids [:vector uuid-or-string?]]
+   [:unit/props response-unit-props]])
+
+(def page
+  [:map {:closed true}
+   [:unit/id uuid-or-string?]
+   [:unit/text-id {:optional true} string-uuid-or-text-id]
+   [:unit/type [:= :unit/page]]
+   [:unit/parent-id uuid-or-string?]
+   [:unit/content {:optional true} :any]])
+
+(def unit
+  [:or book page])
+
+(def response-link-props
+  [:map {:closed true}
+   [:props/color all-colors-enum]
+   [:props/weight {:optional true} link-weights]
+   [:props/arrowhead link-arrowheads]])
+
+(def link
+  [:map {:closed true}
+   [:link/id uuid-or-string?]
+   [:link/endpoint-ids [:tuple uuid-or-string? uuid-or-string?]]
+   [:link/props {:optional true} response-link-props]])
+
+(def math
+  [:map {:closed true}
+   [:math/id uuid-or-string?]
+   [:math/page-id uuid-or-string?]
+   [:math/type [:enum :math/math :math/chemistry]]
+   [:math/source :string]
+   [:math/block {:optional true} :boolean]
+   [:math/width finite-number]
+   [:math/height finite-number]
+   [:math/vertical-align finite-number]
+   [:math/svg :string]])
+
+(def embed
+  [:or
+   [:map {:closed true}
+    [:embed/id uuid-or-string?]
+    [:embed/page-id uuid-or-string?]
+    [:embed/text-id {:optional true} string-uuid-or-text-id]
+    [:embed/source :string]]
+   [:map {:closed true}
+    [:embed/id uuid-or-string?]
+    [:embed/page-id uuid-or-string?]
+    [:embed/text-id {:optional true} string-uuid-or-text-id]
+    [:embed/file-id uuid-or-string?]]])
+
+(def file-attachment
+  [:map {:closed true}
+   [:file/id uuid-or-string?]
+   [:file/token uuid-or-string?]
+   [:file/filename :string]
+   [:file/content-type :string]
+   [:file/size finite-number]
+   [:file/last-modified utc-timestamp]])
+
+(def thumbnail-size
+  [:map {:closed true}
+   [:thumbnail/width finite-number]
+   [:thumbnail/height finite-number]
+   [:thumbnail/size finite-number]])
+
+(def image-attachment
+  [:map {:closed true}
+   [:image/id uuid-or-string?]
+   [:image/token uuid-or-string?]
+   [:image/filename :string]
+   [:image/width finite-number]
+   [:image/height finite-number]
+   [:image/format :string]
+   [:image/thumbnail-format {:optional true} :string]
+   [:image/size finite-number]
+   [:image/last-modified utc-timestamp]
+   [:image/url {:optional true} :string]
+   [:image/thumbnail-sizes [:vector thumbnail-size]]])
+
+(def fragment
+  [:map {:closed true}
+   [:fragment/id uuid-or-string?]
+   [:fragment/text-id {:optional true} string-uuid-or-text-id]
+   [:fragment/title {:optional true} :string]
+   [:fragment/opened-page-ids {:optional true} [:set uuid-or-string?]]
+   [:fragment/closed-book-ids {:optional true} [:set uuid-or-string?]]
+   [:fragment/focused-book-ids {:optional true} [:set uuid-or-string?]]
+   [:fragment/shown-book-ids {:optional true} [:set uuid-or-string?]]
+   [:fragment/hidden-book-ids {:optional true} [:set uuid-or-string?]]])
+
+(def path
+  [:map {:closed true}
+   [:path/id uuid-or-string?]
+   [:path/title {:optional true} :string]
+   [:path/step-ids [:vector uuid-or-string?]]])
+
+(def path-step
+  [:map {:closed true}
+   [:step/id uuid-or-string?]
+   [:step/audio-id {:optional true} uuid-or-string?]
+   [:step/opened-page-ids {:optional true} [:set uuid-or-string?]]
+   [:step/closed-book-ids {:optional true} [:set uuid-or-string?]]
+   [:step/focused-book-ids {:optional true} [:set uuid-or-string?]]
+   [:step/shown-book-ids {:optional true} [:set uuid-or-string?]]
+   [:step/hidden-book-ids {:optional true} [:set uuid-or-string?]]])
+
+(def orgpage-objects
+  [:map {:closed true}
+   [:orgpage/units {:optional true} [:vector unit]]
+   [:orgpage/links {:optional true} [:vector link]]
+   [:orgpage/maths {:optional true} [:vector math]]
+   [:orgpage/embeds {:optional true} [:vector embed]]
+   [:orgpage/files {:optional true} [:vector file-attachment]]
+   [:orgpage/images {:optional true} [:vector image-attachment]]
+   [:orgpage/fragments {:optional true} [:vector fragment]]
+   [:orgpage/paths {:optional true} [:vector path]]
+   [:orgpage/path-steps {:optional true} [:vector path-step]]])
+
+(def orgpage
+  [:map {:closed true}
+   [:orgpage/id uuid-or-string?]
+   [:orgpage/title {:optional true} :string]
+   [:orgpage/description {:optional true} :string]
+   [:orgpage/tags {:optional true} [:set :string]]
+   [:orgpage/color spectrum-colors-enum]
+   [:orgpage/owner uuid-or-string?]
+   [:orgpage/creation-time utc-timestamp]
+   [:orgpage/last-load-time {:optional true} utc-timestamp]
+   [:orgpage/last-edit-time {:optional true} utc-timestamp]
+   [:orgpage/math-macros {:optional true} :string]
+   [:orgpage/init-fragments {:optional true} init-fragments]
+   [:orgpage/units {:optional true} [:vector unit]]
+   [:orgpage/links {:optional true} [:vector link]]
+   [:orgpage/maths {:optional true} [:vector math]]
+   [:orgpage/embeds {:optional true} [:vector embed]]
+   [:orgpage/files {:optional true} [:vector file-attachment]]
+   [:orgpage/images {:optional true} [:vector image-attachment]]
+   [:orgpage/fragments {:optional true} [:vector fragment]]
+   [:orgpage/paths {:optional true} [:vector path]]
+   [:orgpage/path-steps {:optional true} [:vector path-step]]])
+
+(def id-response
+  [:map {:closed true}
+   [:orgpage/id uuid-or-string?]])
+
+(def api-key-info-response
+  (api-response
+   [:map {:closed true}
+    [:api-key/id :string]
+    [:api-key/title :string]
+    [:api-key/user-id uuid-or-string?]
+    [:api-key/orgpage-id {:optional true} uuid-or-string?]
+    [:api-key/permission user-permissions]
+    [:api-key/creation-time utc-timestamp]
+    [:api-key/last-used {:optional true} utc-timestamp]]))
+
+(def read-orgpage-response (api-response orgpage))
+(def read-orgpage-metadata-response (api-response orgpage-metadata))
+(def read-orgpage-objects-response (api-response orgpage-objects))
+(def read-unit-response read-orgpage-objects-response)
+(def read-link-response read-orgpage-objects-response)
+(def read-file-response read-orgpage-objects-response)
+(def read-image-response read-orgpage-objects-response)
+(def read-math-response read-orgpage-objects-response)
+(def read-embed-response read-orgpage-objects-response)
+(def read-path-response read-orgpage-objects-response)
+(def read-fragment-response read-orgpage-objects-response)
+(def create-orgpage-response (api-response id-response))
+(def copy-orgpage-response (api-response id-response))
+
+(def listed-orgpage
+  [:map {:closed true}
+   [:orgpage/id uuid-or-string?]
+   [:orgpage/title {:optional true} :string]
+   [:orgpage/description {:optional true} :string]
+   [:orgpage/tags {:optional true} [:set :string]]
+   [:orgpage/color spectrum-colors-enum]
+   [:orgpage/owner uuid-or-string?]
+   [:orgpage/creation-time utc-timestamp]
+   [:orgpage/last-edit-time {:optional true} utc-timestamp]
+   [:orgpage/view-token uuid-or-string?]
+   [:orgpage/permission user-permissions]])
+
+(def orgpage-list-response
+  (api-response
+   [:map {:closed true}
+    [:orgpages [:vector listed-orgpage]]
+    [:owners [:vector user]]
+    [:usergroups {:optional true} [:vector [:map]]]
+    [:shared-orgpage-ids {:optional true} [:set uuid-or-string?]]]))
+
+(def public-orgpage-list-response
+  (api-response
+   [:map {:closed true}
+    [:orgpages [:vector listed-orgpage]]
+    [:owners [:vector user]]]))
+
+(def returned-operation
+  "Server-normalized operation. Its full discriminated form is in ops.types.ts."
+  [:tuple keyword? [:map]])
+
+(def operations-response
+  (api-response
+   [:map {:closed true}
+    [:ops/op-id uuid-or-string?]
+    [:ops/list [:vector returned-operation]]
+    [:ops/dry-run {:optional true} [:= true]]]))
+
+(def sharing-response-body
+  [:map
+   [:permissions/owner user]
+   [:permissions/users {:optional true} [:vector [:map]]]
+   [:permissions/public [:enum :permission/none :permission/view]]
+   [:permissions/view-token uuid-or-string?]
+   [:permissions/comment-token uuid-or-string?]
+   [:permissions/edit-token uuid-or-string?]
+   [:permissions/view-link :string]
+   [:permissions/comment-link :string]
+   [:permissions/edit-link :string]
+   [:permissions/fragments {:optional true} [:vector [:map]]]
+   [:permissions/paths {:optional true} [:vector [:map]]]])
+
+(def read-sharing-response (api-response sharing-response-body))
+(def update-sharing-response read-sharing-response)
+
+(def file-metadata-response
+  (api-response
+   [:map
+    [:file/id uuid-or-string?]
+    [:file/token uuid-or-string?]
+    [:file/filename :string]
+    [:file/content-type :string]
+    [:file/size finite-number]
+    [:file/last-modified utc-timestamp]
+    [:file/orgpage-ids [:set uuid-or-string?]]]))
+
+(def image-metadata-response
+  (api-response
+   [:map
+    [:image/id uuid-or-string?]
+    [:image/token uuid-or-string?]
+    [:image/filename :string]
+    [:image/width finite-number]
+    [:image/height finite-number]
+    [:image/format :string]
+    [:image/thumbnail-sizes [:vector thumbnail-size]]
+    [:image/size finite-number]
+    [:image/last-modified utc-timestamp]
+    [:image/orgpage-ids [:set uuid-or-string?]]]))
+
+(def upload-response
+  (api-response
+   [:map {:closed true}
+    [:files {:optional true} [:vector file-attachment]]
+    [:images {:optional true} [:vector image-attachment]]
+    [:errors {:optional true} [:vector [:map]]]]))
+
+(def rename-file-response
+  (api-response
+   [:map
+    [:old-file-id {:optional true} uuid-or-string?]
+    [:old-poster-id {:optional true} uuid-or-string?]
+    [:file-ops [:vector returned-operation]]
+    [:orgpage-ops [:map-of uuid-or-string? [:vector returned-operation]]]
+    [:dry-run {:optional true} [:= true]]
+    [:file file-attachment]
+    [:poster {:optional true} image-attachment]]))
+
+(def rename-image-response
+  (api-response
+   [:map
+    [:image image-attachment]
+    [:old-image-id {:optional true} uuid-or-string?]
+    [:image-ops [:vector returned-operation]]
+    [:orgpage-ops [:map-of uuid-or-string? [:vector returned-operation]]]
+    [:dry-run {:optional true} [:= true]]]))
+
+(def screenshot-dry-run-response
+  (api-response [:map [:dry-run [:= true]] [:format :string]]))
+
+(def print-dry-run-response
+  (api-response [:map [:dry-run [:= true]]]))
+
+;; All public route body schemas. Request entries describe EDN request bodies;
+;; response entries include the successful EDN body and the shared error body.
+(def request-schemas
+  {:api/get-info no-body
+   :api/list-orgpages no-body
+   :api/list-public-orgpages no-body
+   :api/create-orgpage create-orgpage
+   :api/copy-orgpage no-body
+   :api/delete-orgpage no-body
+   :api/read-orgpage no-body
+   :api/read-orgpage-metadata no-body
+   :api/read-orgpage-unit no-body
+   :api/read-orgpage-link no-body
+   :api/read-orgpage-file no-body
+   :api/read-orgpage-image no-body
+   :api/read-orgpage-math no-body
+   :api/read-orgpage-embed no-body
+   :api/read-orgpage-path no-body
+   :api/read-orgpage-fragment no-body
+   :api/apply-orgpage-ops ops
+   :api/read-orgpage-share no-body
+   :api/update-orgpage-share permission-op
+   :api/read-file-metadata no-body
+   :api/read-image-metadata no-body
+   ;; Upload uses multipart/form-data rather than an EDN request body.
+   :api/rename-file file-rename
+   :api/rename-image image-rename
+   :api/screenshot screenshot-orgpage
+   :api/print print-orgpage})
+
+(def non-edn-request-routes
+  "Routes whose request body is not EDN."
+  #{:api/upload})
+
+(def response-schemas
+  {:api/get-info api-key-info-response
+   :api/list-orgpages orgpage-list-response
+   :api/list-public-orgpages public-orgpage-list-response
+   :api/create-orgpage create-orgpage-response
+   :api/copy-orgpage copy-orgpage-response
+   :api/read-orgpage read-orgpage-response
+   :api/read-orgpage-metadata read-orgpage-metadata-response
+   :api/read-orgpage-unit read-unit-response
+   :api/read-orgpage-link read-link-response
+   :api/read-orgpage-file read-file-response
+   :api/read-orgpage-image read-image-response
+   :api/read-orgpage-math read-math-response
+   :api/read-orgpage-embed read-embed-response
+   :api/read-orgpage-path read-path-response
+   :api/read-orgpage-fragment read-fragment-response
+   :api/apply-orgpage-ops operations-response
+   :api/read-orgpage-share read-sharing-response
+   :api/update-orgpage-share update-sharing-response
+   :api/read-file-metadata file-metadata-response
+   :api/read-image-metadata image-metadata-response
+   :api/upload upload-response
+   :api/rename-file rename-file-response
+   :api/rename-image rename-image-response
+   ;; Non-dry-run screenshot and print successes are binary.
+   :api/screenshot screenshot-dry-run-response
+   :api/print print-dry-run-response})
+
+(def non-edn-success-routes
+  "Routes with no successful EDN response body (binary or HTTP 204)."
+  #{:api/delete-orgpage :api/download-file :api/download-image
+    :api/screenshot :api/print})

@@ -130,7 +130,7 @@ Common additional fields include:
 HTTP status codes describe the general result of the request.
 
 | Status                       | When it is returned                                                                                                          |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------------|
 | `200 OK`                     | Successful reads and most writes. Upload responses include per-file `errors` entries when some files failed.                 |
 | `201 Created`                | OrgPage creation and copy.                                                                                                   |
 | `204 No Content`             | Successful delete.                                                                                                           |
@@ -178,7 +178,7 @@ Request body errors happen after authentication, when the API parses and validat
 | `unsupported-response-format` | `406`  | The `Accept` header does not allow a response format supported by the endpoint. | Use a supported `Accept` value from [formats](formats.md#request-and-response-headers). |
 | `unsupported-content-type`    | `415`  | The request body has an unsupported `Content-Type`.                             | Use `application/json` (default), `application/edn`, or `application/transit+json`.     |
 | `invalid-request-body`        | `400`  | The request body could not be parsed as the declared format.                    | Check JSON/EDN/Transit syntax and string escaping.                                      |
-| `body-schema-error`           | `400`  | The parsed body does not match the endpoint schema.                             | Inspect `schemaError`, then check the endpoint page or [Malli schemas](schema.cljc).    |
+| `body-schema-error`           | `400`  | The parsed body does not match the endpoint schema.                             | Inspect `schemaError`, then check the endpoint page or [Schemas and TypeScript types](schema.md).    |
 
 Common `body-schema-error` causes include:
 

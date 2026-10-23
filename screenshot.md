@@ -65,7 +65,8 @@ JSON uses arrays for the three ID sets. EDN uses sets. Duplicate IDs do not chan
 `fragmentId` can refer to an explicit saved fragment. It can also refer to a unit, link, path, or path step and uses
 that object's implicit fragment. See [fragments and implicit fragments](orgpage.md#fragments).
 
-The public EDN Malli schema is available as `screenshot-orgpage` in [Malli schemas](schema.cljc).
+The public EDN Malli schema is available as `screenshot-orgpage` in
+[Schemas and TypeScript types](schema.md).
 
 ## Choose a Screenshot Target
 
@@ -99,11 +100,11 @@ The endpoint can return normal authentication, permission, request-body, and ID 
 
 ## Related Pages
 
-| Page                                   | When to use it                                            |
-| -------------------------------------- | --------------------------------------------------------- |
-| [PDF prints of OrgPages](print.md)     | Generate a PDF or print a whole presentation path.        |
-| [Input and output formats](formats.md) | Choose image and structured error formats.                |
-| [Authentication and API keys](auth.md) | Create a view key and understand sharing-token access.    |
-| [OrgPage data](orgpage.md)             | Learn about fragments, units, links, paths, and text IDs. |
-| [Malli schemas](schema.cljc)           | Validate EDN request bodies before calling the endpoint.  |
-| [Errors](errors.md)                    | Handle screenshot and normal API errors.                  |
+| Page                                      | When to use it                                            |
+|-------------------------------------------|-----------------------------------------------------------|
+| [PDF prints of OrgPages](print.md)        | Generate a PDF or print a whole presentation path.        |
+| [Input and output formats](formats.md)    | Choose image and structured error formats.                |
+| [Authentication and API keys](auth.md)    | Create a view key and understand sharing-token access.    |
+| [OrgPage data](orgpage.md)                | Learn about fragments, units, links, paths, and text IDs. |
+| [Schemas and TypeScript types](schema.md) | Validate EDN request bodies before calling the endpoint.  |
+| [Errors](errors.md)                       | Handle screenshot and normal API errors.                  |

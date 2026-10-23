@@ -1,0 +1,1807 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrgPad operations request body",
+  "description": "JSON request body for POST /api/v1/o/{orgpage-id}/ops. Structural validation only; see operations documentation for semantic rules.",
+  "type": "array",
+  "items": {
+    "anyOf": [
+      {
+        "$ref": "#/$defs/OrgpageUpdateMetaOperation"
+      },
+      {
+        "$ref": "#/$defs/OrgpageRemoveImageOperation"
+      },
+      {
+        "$ref": "#/$defs/OrgpageRemoveFileOperation"
+      },
+      {
+        "$ref": "#/$defs/OrgpageAddImageOperation"
+      },
+      {
+        "$ref": "#/$defs/OrgpageAddFileOperation"
+      },
+      {
+        "$ref": "#/$defs/UnitCreateOperation"
+      },
+      {
+        "$ref": "#/$defs/UnitUpdateOperation"
+      },
+      {
+        "$ref": "#/$defs/UnitRemoveOperation"
+      },
+      {
+        "$ref": "#/$defs/UnitMoveOperation"
+      },
+      {
+        "$ref": "#/$defs/UnitChangePropsOperation"
+      },
+      {
+        "$ref": "#/$defs/UnitAddChildUnitOperation"
+      },
+      {
+        "$ref": "#/$defs/UnitRemoveChildUnitOperation"
+      },
+      {
+        "$ref": "#/$defs/UnitMoveChildUnitOperation"
+      },
+      {
+        "$ref": "#/$defs/LinkCreateOperation"
+      },
+      {
+        "$ref": "#/$defs/LinkRemoveOperation"
+      },
+      {
+        "$ref": "#/$defs/LinkStraightenOperation"
+      },
+      {
+        "$ref": "#/$defs/LinkFlipOperation"
+      },
+      {
+        "$ref": "#/$defs/LinkChangePropsOperation"
+      },
+      {
+        "$ref": "#/$defs/MathCreateOperation"
+      },
+      {
+        "$ref": "#/$defs/MathUpdateOperation"
+      },
+      {
+        "$ref": "#/$defs/MathRemoveOperation"
+      },
+      {
+        "$ref": "#/$defs/MathSetMacrosOperation"
+      },
+      {
+        "$ref": "#/$defs/EmbedCreateOperation"
+      },
+      {
+        "$ref": "#/$defs/EmbedUpdateOperation"
+      },
+      {
+        "$ref": "#/$defs/EmbedRemoveOperation"
+      },
+      {
+        "$ref": "#/$defs/PathCreateOperation"
+      },
+      {
+        "$ref": "#/$defs/PathUpdateTitleOperation"
+      },
+      {
+        "$ref": "#/$defs/PathRemoveOperation"
+      },
+      {
+        "$ref": "#/$defs/PathAddStepOperation"
+      },
+      {
+        "$ref": "#/$defs/PathRemoveStepOperation"
+      },
+      {
+        "$ref": "#/$defs/PathUpdateUnitsOperation"
+      },
+      {
+        "$ref": "#/$defs/PathSetAudioOperation"
+      },
+      {
+        "$ref": "#/$defs/PathMoveStepOperation"
+      },
+      {
+        "$ref": "#/$defs/FragmentCreateOperation"
+      },
+      {
+        "$ref": "#/$defs/FragmentUpdateOperation"
+      },
+      {
+        "$ref": "#/$defs/FragmentUpdateUnitsOperation"
+      },
+      {
+        "$ref": "#/$defs/FragmentRemoveOperation"
+      }
+    ]
+  },
+  "$defs": {
+    "EmbedCreateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "embed/create"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "fileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "fileToken": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "pageId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "source": {
+              "type": "string"
+            },
+            "textId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "pageId"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "EmbedRemoveOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "embed/remove"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "EmbedUpdateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "embed/update"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "fileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "fileToken": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "source": {
+              "type": "string"
+            },
+            "textId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "FragmentCreateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "fragment/create"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "closedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "focusedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "hiddenBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "openedPageIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "shownBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "textId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "textId"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "FragmentRemoveOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "fragment/remove"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "FragmentUpdateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "fragment/update"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "textId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "title": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "FragmentUpdateUnitsOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "fragment/update-units"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "addClosedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "addFocusedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "addHiddenBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "addOpenedPageIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "addShownBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "removeClosedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "removeFocusedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "removeHiddenBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "removeOpenedPageIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "removeShownBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "LinkChangePropsOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "link/change-props"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "props": {
+              "type": "object",
+              "properties": {
+                "arrowhead": {
+                  "enum": [
+                    "props/none",
+                    "props/single",
+                    "props/double"
+                  ]
+                },
+                "color": {
+                  "enum": [
+                    "color/white",
+                    "color/light-gray",
+                    "color/gray",
+                    "color/red",
+                    "color/orange",
+                    "color/yellow",
+                    "color/lime",
+                    "color/green",
+                    "color/mint",
+                    "color/teal",
+                    "color/blue",
+                    "color/blueberry",
+                    "color/purple",
+                    "color/orchid",
+                    "color/pink"
+                  ]
+                },
+                "weight": {
+                  "enum": [
+                    "props/none",
+                    "props/strong"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "props"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "LinkCreateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "link/create"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "endpointIds": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "props": {
+              "type": "object",
+              "properties": {
+                "arrowhead": {
+                  "enum": [
+                    "props/none",
+                    "props/single",
+                    "props/double"
+                  ]
+                },
+                "color": {
+                  "enum": [
+                    "color/white",
+                    "color/light-gray",
+                    "color/gray",
+                    "color/red",
+                    "color/orange",
+                    "color/yellow",
+                    "color/lime",
+                    "color/green",
+                    "color/mint",
+                    "color/teal",
+                    "color/blue",
+                    "color/blueberry",
+                    "color/purple",
+                    "color/orchid",
+                    "color/pink"
+                  ]
+                },
+                "weight": {
+                  "enum": [
+                    "props/none",
+                    "props/strong"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "endpointIds"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "LinkFlipOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "link/flip"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "LinkRemoveOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "link/remove"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "LinkStraightenOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "link/straighten"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "MathCreateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "math/create"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "block": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "pageId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "source": {
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "math/math",
+                "math/chemistry"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "pageId",
+            "source",
+            "type"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "MathRemoveOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "math/remove"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "MathSetMacrosOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "math/set-macros"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "macros": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "macros"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "MathUpdateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "math/update"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "block": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "source": {
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "math/math",
+                "math/chemistry"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "OrgpageAddFileOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "orgpage/add-file"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "token": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "OrgpageAddImageOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "orgpage/add-image"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "token": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "OrgpageRemoveFileOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "orgpage/remove-file"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "OrgpageRemoveImageOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "orgpage/remove-image"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "OrgpageUpdateMetaOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "orgpage/update-meta"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "color": {
+              "enum": [
+                "color/red",
+                "color/orange",
+                "color/yellow",
+                "color/lime",
+                "color/green",
+                "color/mint",
+                "color/teal",
+                "color/blue",
+                "color/blueberry",
+                "color/purple",
+                "color/orchid",
+                "color/pink"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "initFragments": {
+              "type": "object",
+              "properties": {
+                "default": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9_-]+$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "screenshot": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9_-]+$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "smallScreen": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9_-]+$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 30
+              },
+              "maxItems": 60
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "PathAddStepOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "path/add-step"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "audioId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "closedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "focusedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "hiddenBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "openedPageIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "shownBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "stepId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "PathCreateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "path/create"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "PathMoveStepOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "path/move-step"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "newIndex": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "newIndex"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "PathRemoveOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "path/remove"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "PathRemoveStepOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "path/remove-step"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "PathSetAudioOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "path/set-audio"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "audioId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "audioId"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "PathUpdateTitleOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "path/update-title"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "title": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "PathUpdateUnitsOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "path/update-units"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "addClosedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "addFocusedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "addHiddenBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "addOpenedPageIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "addShownBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "removeClosedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "removeFocusedBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "removeHiddenBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "removeOpenedPageIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "removeShownBookIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "UnitAddChildUnitOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "unit/add-child-unit"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "childId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "childId"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "UnitChangePropsOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "unit/change-props"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "props": {
+              "type": "object",
+              "properties": {
+                "color": {
+                  "enum": [
+                    "color/white",
+                    "color/light-gray",
+                    "color/gray",
+                    "color/red",
+                    "color/orange",
+                    "color/yellow",
+                    "color/lime",
+                    "color/green",
+                    "color/mint",
+                    "color/teal",
+                    "color/blue",
+                    "color/blueberry",
+                    "color/purple",
+                    "color/orchid",
+                    "color/pink"
+                  ]
+                },
+                "titleSize": {
+                  "enum": [
+                    "props/h1",
+                    "props/h2",
+                    "props/h3"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "props"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "UnitCreateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "unit/create"
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "childUnitIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  }
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "pos": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -1000000,
+                      "maximum": 1000000
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -1000000,
+                      "maximum": 1000000
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "props": {
+                  "type": "object",
+                  "properties": {
+                    "color": {
+                      "enum": [
+                        "color/white",
+                        "color/light-gray",
+                        "color/gray",
+                        "color/red",
+                        "color/orange",
+                        "color/yellow",
+                        "color/lime",
+                        "color/green",
+                        "color/mint",
+                        "color/teal",
+                        "color/blue",
+                        "color/blueberry",
+                        "color/purple",
+                        "color/orchid",
+                        "color/pink"
+                      ]
+                    },
+                    "titleSize": {
+                      "enum": [
+                        "props/h1",
+                        "props/h2",
+                        "props/h3"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "textId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "type": {
+                  "const": "unit/book"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "pos",
+                "childUnitIds"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "content": {},
+                "contentType": {
+                  "enum": [
+                    "hiccup",
+                    "html",
+                    "plain",
+                    "markdown"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "parentId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "textId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "type": {
+                  "const": "unit/page"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "parentId"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "content": {},
+                "contentType": {
+                  "enum": [
+                    "hiccup",
+                    "html",
+                    "plain",
+                    "markdown"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "pageId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "pageTextId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "pos": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "number",
+                      "minimum": -1000000,
+                      "maximum": 1000000
+                    },
+                    {
+                      "type": "number",
+                      "minimum": -1000000,
+                      "maximum": 1000000
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                "props": {
+                  "type": "object",
+                  "properties": {
+                    "color": {
+                      "enum": [
+                        "color/white",
+                        "color/light-gray",
+                        "color/gray",
+                        "color/red",
+                        "color/orange",
+                        "color/yellow",
+                        "color/lime",
+                        "color/green",
+                        "color/mint",
+                        "color/teal",
+                        "color/blue",
+                        "color/blueberry",
+                        "color/purple",
+                        "color/orchid",
+                        "color/pink"
+                      ]
+                    },
+                    "titleSize": {
+                      "enum": [
+                        "props/h1",
+                        "props/h2",
+                        "props/h3"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "textId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "pos"
+              ]
+            }
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "UnitMoveChildUnitOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "unit/move-child-unit"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "childId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "newIndex": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "childId",
+            "newIndex"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "UnitMoveOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "unit/move"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "pos": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "minimum": -1000000,
+                  "maximum": 1000000
+                },
+                {
+                  "type": "number",
+                  "minimum": -1000000,
+                  "maximum": 1000000
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "pos"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "UnitRemoveChildUnitOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "unit/remove-child-unit"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "childId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "childId"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "UnitRemoveOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "unit/remove"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "id"
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "UnitUpdateOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "unit/update"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "appendedContent": {},
+            "content": {
+              "anyOf": [
+                {},
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "contentType": {
+              "enum": [
+                "hiccup",
+                "html",
+                "plain",
+                "markdown"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "textId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    }
+  }
+}

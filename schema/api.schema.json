@@ -1,0 +1,1882 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrgPad JSON API bodies",
+  "description": "Reusable JSON Schema definitions for documented API request and response bodies. Each definition is named after its TypeScript counterpart. Routes with no body, multipart bodies, and binary success bodies are described in schema.md rather than represented as JSON values.",
+  "$defs": {
+    "Id": {
+      "type": "string"
+    },
+    "UtcTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC ISO 8601 timestamp."
+    },
+    "SpectrumColor": {
+      "enum": [
+        "color/red",
+        "color/orange",
+        "color/yellow",
+        "color/green",
+        "color/teal",
+        "color/blue",
+        "color/indigo",
+        "color/purple",
+        "color/pink",
+        "color/brown",
+        "color/gray"
+      ]
+    },
+    "Color": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SpectrumColor"
+        },
+        {
+          "enum": [
+            "color/white",
+            "color/light-gray",
+            "color/gray"
+          ]
+        }
+      ]
+    },
+    "Permission": {
+      "enum": [
+        "permission/view",
+        "permission/comment",
+        "permission/edit",
+        "permission/admin"
+      ]
+    },
+    "JsonValue": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          }
+        }
+      ]
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "OrgPageMetadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "color": {
+          "$ref": "#/$defs/SpectrumColor"
+        },
+        "owner": {
+          "$ref": "#/$defs/Id"
+        },
+        "creationTime": {
+          "$ref": "#/$defs/UtcTimestamp"
+        },
+        "lastLoadTime": {
+          "$ref": "#/$defs/UtcTimestamp"
+        },
+        "lastEditTime": {
+          "$ref": "#/$defs/UtcTimestamp"
+        },
+        "mathMacros": {
+          "type": "string"
+        },
+        "initFragments": {
+          "type": "object",
+          "properties": {
+            "default": {
+              "$ref": "#/$defs/Id"
+            },
+            "smallScreen": {
+              "$ref": "#/$defs/Id"
+            },
+            "screenshot": {
+              "$ref": "#/$defs/Id"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "color",
+        "owner",
+        "creationTime"
+      ]
+    },
+    "UnitProps": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/Color"
+        },
+        "titleSize": {
+          "enum": [
+            "props/h1",
+            "props/h2",
+            "props/h3"
+          ]
+        }
+      },
+      "required": [
+        "color",
+        "titleSize"
+      ],
+      "additionalProperties": false
+    },
+    "Book": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "textId": {
+          "$ref": "#/$defs/Id"
+        },
+        "type": {
+          "const": "unit/book"
+        },
+        "title": {
+          "type": "string"
+        },
+        "pos": {
+          "$ref": "#/$defs/Position"
+        },
+        "childUnitIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "props": {
+          "$ref": "#/$defs/UnitProps"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "pos",
+        "childUnitIds",
+        "props"
+      ],
+      "additionalProperties": false
+    },
+    "Page": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "textId": {
+          "$ref": "#/$defs/Id"
+        },
+        "type": {
+          "const": "unit/page"
+        },
+        "parentId": {
+          "$ref": "#/$defs/Id"
+        },
+        "content": {
+          "type": "string",
+          "description": "HTML in JSON responses."
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "parentId"
+      ],
+      "additionalProperties": false
+    },
+    "Unit": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Book"
+        },
+        {
+          "$ref": "#/$defs/Page"
+        }
+      ]
+    },
+    "LinkProps": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/Color"
+        },
+        "weight": {
+          "enum": [
+            "props/none",
+            "props/strong"
+          ]
+        },
+        "arrowhead": {
+          "enum": [
+            "props/none",
+            "props/single",
+            "props/double"
+          ]
+        }
+      },
+      "required": [
+        "color",
+        "arrowhead"
+      ],
+      "additionalProperties": false
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "endpointIds": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/Id"
+            },
+            {
+              "$ref": "#/$defs/Id"
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "props": {
+          "$ref": "#/$defs/LinkProps"
+        }
+      },
+      "required": [
+        "id",
+        "endpointIds"
+      ],
+      "additionalProperties": false
+    },
+    "MathObject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "pageId": {
+          "$ref": "#/$defs/Id"
+        },
+        "type": {
+          "enum": [
+            "math/math",
+            "math/chemistry"
+          ]
+        },
+        "source": {
+          "type": "string"
+        },
+        "block": {
+          "type": "boolean"
+        },
+        "width": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "verticalAlign": {
+          "type": "number"
+        },
+        "svg": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "pageId",
+        "type",
+        "source",
+        "width",
+        "height",
+        "verticalAlign",
+        "svg"
+      ],
+      "additionalProperties": false
+    },
+    "Embed": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "pageId": {
+              "$ref": "#/$defs/Id"
+            },
+            "textId": {
+              "$ref": "#/$defs/Id"
+            },
+            "source": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "pageId",
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "pageId": {
+              "$ref": "#/$defs/Id"
+            },
+            "textId": {
+              "$ref": "#/$defs/Id"
+            },
+            "fileId": {
+              "$ref": "#/$defs/Id"
+            }
+          },
+          "required": [
+            "id",
+            "pageId",
+            "fileId"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "FileAttachment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "token": {
+          "$ref": "#/$defs/Id"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        },
+        "lastModified": {
+          "$ref": "#/$defs/UtcTimestamp"
+        }
+      },
+      "required": [
+        "id",
+        "token",
+        "filename",
+        "contentType",
+        "size",
+        "lastModified"
+      ]
+    },
+    "ImageAttachment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "token": {
+          "$ref": "#/$defs/Id"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "width": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "format": {
+          "type": "string"
+        },
+        "thumbnailFormat": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        },
+        "lastModified": {
+          "$ref": "#/$defs/UtcTimestamp"
+        },
+        "url": {
+          "type": "string"
+        },
+        "thumbnailSizes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              },
+              "size": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "width",
+              "height",
+              "size"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "token",
+        "filename",
+        "width",
+        "height",
+        "format",
+        "size",
+        "lastModified",
+        "thumbnailSizes"
+      ]
+    },
+    "UnitSelection": {
+      "type": "object",
+      "properties": {
+        "openedPageIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "closedBookIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "focusedBookIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "shownBookIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "hiddenBookIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "textId": {
+          "$ref": "#/$defs/Id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "audioId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Fragment": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/UnitSelection"
+        },
+        {
+          "type": "object",
+          "required": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "Path": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "stepIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "stepIds"
+      ],
+      "additionalProperties": false
+    },
+    "PathStep": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/UnitSelection"
+        },
+        {
+          "type": "object",
+          "required": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "OrgPageObjects": {
+      "type": "object",
+      "properties": {
+        "units": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Unit"
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Link"
+          }
+        },
+        "maths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MathObject"
+          }
+        },
+        "embeds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Embed"
+          }
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FileAttachment"
+          }
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ImageAttachment"
+          }
+        },
+        "fragments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Fragment"
+          }
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Path"
+          }
+        },
+        "pathSteps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PathStep"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "OrgPage": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/OrgPageMetadata"
+        },
+        {
+          "$ref": "#/$defs/OrgPageObjects"
+        }
+      ]
+    },
+    "ApiErrorCode": {
+      "enum": [
+        "added-page-out-of-bounds",
+        "added-step-out-of-bounds",
+        "already-has-permission",
+        "audio-not-found",
+        "body-schema-error",
+        "cannot-change-owner-permission",
+        "content-and-appended-content",
+        "dark-mode-different-size",
+        "dark-mode-image-only",
+        "dm-image-not-found",
+        "duplicate-embed-id",
+        "duplicate-math-id",
+        "duplicate-text-id",
+        "embed-file-not-found",
+        "embed-linked-to-different-page",
+        "embed-not-found",
+        "embed-source-or-file",
+        "empty-children",
+        "empty-path-steps",
+        "expired-subscription",
+        "file-missing-in-orgpages",
+        "file-not-found",
+        "fragment-not-found",
+        "hiccup-content-schema-error",
+        "id-already-exists",
+        "image-missing-in-orgpages",
+        "image-not-found",
+        "invalid-api-key",
+        "invalid-audio-id",
+        "invalid-audio-source",
+        "invalid-authorization",
+        "invalid-embed-params",
+        "invalid-file-id",
+        "invalid-file-source",
+        "invalid-id",
+        "invalid-image",
+        "invalid-image-dm-source",
+        "invalid-image-id-or-token",
+        "invalid-image-source",
+        "invalid-mark-color",
+        "invalid-math-source",
+        "invalid-orgpage-params",
+        "invalid-orgpage-source",
+        "invalid-request-body",
+        "invalid-user-or-usergroup",
+        "invalid-video-id",
+        "invalid-video-source",
+        "invalid-youtube-id",
+        "invalid-youtube-source",
+        "key-for-single-orgpage",
+        "key-permission-denied",
+        "link-not-found",
+        "math-linked-to-different-page",
+        "math-not-found",
+        "missing-child",
+        "missing-child-in-parent",
+        "missing-embed-in-content",
+        "missing-embed-source",
+        "missing-math-in-content",
+        "missing-math-source",
+        "missing-parent",
+        "missing-youtube-source",
+        "moved-page-out-of-bounds",
+        "moved-step-out-of-bounds",
+        "multiple-embed-sources",
+        "multiple-math-macros",
+        "multiple-math-operations",
+        "multiple-math-sources",
+        "op-for-removed-id",
+        "orgpage-not-found",
+        "owner-share-limit-reached",
+        "page-not-in-book",
+        "parent-mismatch",
+        "path-not-found",
+        "permission-not-found",
+        "print-failed",
+        "print-fragment-not-found",
+        "print-target-conflict",
+        "print-timeout",
+        "removed-embed-still-in-content",
+        "removed-math-still-in-content",
+        "same-link-endpoints",
+        "screenshot-failed",
+        "screenshot-fragment-not-found",
+        "screenshot-target-conflict",
+        "screenshot-timeout",
+        "short-link-not-found",
+        "specify-edited-page",
+        "storage-quota-exceeded",
+        "string-html-content",
+        "string-markdown-content",
+        "string-plain-content",
+        "unit-not-found",
+        "unknown-id",
+        "unknown-short-link",
+        "unsupported-audio-format",
+        "unsupported-code-lang",
+        "unsupported-content-type",
+        "unsupported-embed-file-format",
+        "unsupported-response-format",
+        "unsupported-video-format",
+        "user-permission-denied",
+        "video-not-found",
+        "video-poster",
+        "wrong-id-type",
+        "youtube-video-unavailable"
+      ]
+    },
+    "ApiErrorDetails": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/ApiErrorCode"
+        },
+        "message": {
+          "type": "string"
+        },
+        "docs": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "docs"
+      ],
+      "additionalProperties": true,
+      "description": "The additional fields depend on code; see errors.types.ts for the complete discriminated union."
+    },
+    "ApiErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/$defs/ApiErrorDetails"
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "Position": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "CreateOrgPageRequest": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "color": {
+              "$ref": "#/$defs/SpectrumColor"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "OperationsRequest": {
+      "$ref": "ops.schema.json"
+    },
+    "SharingRequest": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "array",
+            "prefixItems": [
+              {
+                "const": "permission/set-public-permission"
+              },
+              {
+                "enum": [
+                  "permission/none",
+                  "permission/view"
+                ]
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          },
+          {
+            "type": "array",
+            "prefixItems": [
+              {
+                "const": "permission/reset-tokens"
+              }
+            ],
+            "minItems": 1,
+            "maxItems": 1
+          },
+          {
+            "type": "array",
+            "prefixItems": [
+              {
+                "enum": [
+                  "permission/add-user",
+                  "permission/set-user-permission"
+                ]
+              },
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/Permission"
+              }
+            ],
+            "minItems": 3,
+            "maxItems": 3
+          },
+          {
+            "type": "array",
+            "prefixItems": [
+              {
+                "const": "permission/remove-user"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          }
+        ]
+      }
+    },
+    "RenameAttachmentRequest": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "orgpageIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "required": [
+        "filename"
+      ],
+      "additionalProperties": false
+    },
+    "ScreenshotRequest": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "resolution": {
+              "$ref": "#/$defs/Resolution"
+            },
+            "theme": {
+              "enum": [
+                "light",
+                "dark"
+              ]
+            },
+            "fragmentId": {
+              "$ref": "#/$defs/Id"
+            },
+            "open": {
+              "const": "all"
+            },
+            "openedPageIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Id"
+              }
+            },
+            "focusedBookIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Id"
+              }
+            },
+            "hiddenBookIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "fragmentId",
+                  "open"
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "fragmentId"
+                ]
+              },
+              "then": {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "openedPageIds"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "focusedBookIds"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "hiddenBookIds"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "open"
+                ]
+              },
+              "then": {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "openedPageIds"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "focusedBookIds"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "hiddenBookIds"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "PrintRequest": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "color": {
+              "enum": [
+                "white",
+                "gray",
+                "dm"
+              ]
+            },
+            "size": {
+              "enum": [
+                "a4",
+                "letter",
+                "ratio-4-to-3",
+                "ratio-16-to-9"
+              ]
+            },
+            "orientation": {
+              "enum": [
+                "landscape",
+                "portrait"
+              ]
+            },
+            "padding": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 500
+                },
+                {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 500
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 500
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              ]
+            },
+            "pathId": {
+              "$ref": "#/$defs/Id"
+            },
+            "fragmentId": {
+              "$ref": "#/$defs/Id"
+            },
+            "open": {
+              "const": "all"
+            },
+            "openedPageIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Id"
+              }
+            },
+            "focusedBookIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Id"
+              }
+            },
+            "hiddenBookIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "pathId",
+                      "fragmentId"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "pathId",
+                      "open"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "pathId",
+                      "openedPageIds"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "pathId",
+                      "focusedBookIds"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "pathId",
+                      "hiddenBookIds"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "fragmentId",
+                      "open"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Resolution": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer",
+          "minimum": 300,
+          "maximum": 4000
+        },
+        {
+          "type": "integer",
+          "minimum": 300,
+          "maximum": 4000
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "IdResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "ApiKeyInfoResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "userId": {
+              "$ref": "#/$defs/Id"
+            },
+            "orgpageId": {
+              "$ref": "#/$defs/Id"
+            },
+            "permission": {
+              "$ref": "#/$defs/Permission"
+            },
+            "creationTime": {
+              "$ref": "#/$defs/UtcTimestamp"
+            },
+            "lastUsed": {
+              "$ref": "#/$defs/UtcTimestamp"
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "userId",
+            "permission",
+            "creationTime"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ReadOrgPageResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/OrgPage"
+        }
+      ]
+    },
+    "ReadOrgPageMetadataResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/OrgPageMetadata"
+        }
+      ]
+    },
+    "ReadOrgPageObjectsResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/OrgPageObjects"
+        }
+      ]
+    },
+    "ReadUnitResponse": {
+      "$ref": "#/$defs/ReadOrgPageObjectsResponse"
+    },
+    "ReadLinkResponse": {
+      "$ref": "#/$defs/ReadOrgPageObjectsResponse"
+    },
+    "ReadFileResponse": {
+      "$ref": "#/$defs/ReadOrgPageObjectsResponse"
+    },
+    "ReadImageResponse": {
+      "$ref": "#/$defs/ReadOrgPageObjectsResponse"
+    },
+    "ReadMathResponse": {
+      "$ref": "#/$defs/ReadOrgPageObjectsResponse"
+    },
+    "ReadEmbedResponse": {
+      "$ref": "#/$defs/ReadOrgPageObjectsResponse"
+    },
+    "ReadPathResponse": {
+      "$ref": "#/$defs/ReadOrgPageObjectsResponse"
+    },
+    "ReadFragmentResponse": {
+      "$ref": "#/$defs/ReadOrgPageObjectsResponse"
+    },
+    "CreateOrgPageResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/IdResponse"
+        }
+      ]
+    },
+    "CopyOrgPageResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/IdResponse"
+        }
+      ]
+    },
+    "ListedOrgPage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "color": {
+          "$ref": "#/$defs/SpectrumColor"
+        },
+        "owner": {
+          "$ref": "#/$defs/Id"
+        },
+        "creationTime": {
+          "$ref": "#/$defs/UtcTimestamp"
+        },
+        "lastEditTime": {
+          "$ref": "#/$defs/UtcTimestamp"
+        },
+        "viewToken": {
+          "$ref": "#/$defs/Id"
+        },
+        "permission": {
+          "$ref": "#/$defs/Permission"
+        }
+      },
+      "required": [
+        "id",
+        "color",
+        "owner",
+        "creationTime",
+        "viewToken",
+        "permission"
+      ],
+      "additionalProperties": false
+    },
+    "OrgPageListBody": {
+      "type": "object",
+      "properties": {
+        "orgpages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ListedOrgPage"
+          }
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/User"
+          }
+        },
+        "usergroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/Id"
+              },
+              "name": {
+                "type": "string"
+              },
+              "orgpageIds": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/Id"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "sharedOrgpageIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      },
+      "required": [
+        "orgpages",
+        "owners"
+      ],
+      "additionalProperties": false
+    },
+    "OrgPageListResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/OrgPageListBody"
+        }
+      ]
+    },
+    "PublicOrgPageListResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "orgpages": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ListedOrgPage"
+              }
+            },
+            "owners": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/User"
+              }
+            }
+          },
+          "required": [
+            "orgpages",
+            "owners"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ReturnedOperation": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "A normalized operation returned by the server. See ops.types.ts for the discriminated union."
+    },
+    "OperationsResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ReturnedOperation"
+              }
+            },
+            "dryRun": {
+              "const": true
+            }
+          },
+          "required": [
+            "id",
+            "list"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "SharingBody": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "$ref": "#/$defs/User"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/Id"
+              },
+              "name": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "permission": {
+                "$ref": "#/$defs/Permission"
+              }
+            },
+            "required": [
+              "id",
+              "permission"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "public": {
+          "enum": [
+            "permission/none",
+            "permission/view"
+          ]
+        },
+        "viewToken": {
+          "$ref": "#/$defs/Id"
+        },
+        "commentToken": {
+          "$ref": "#/$defs/Id"
+        },
+        "editToken": {
+          "$ref": "#/$defs/Id"
+        },
+        "viewLink": {
+          "type": "string"
+        },
+        "commentLink": {
+          "type": "string"
+        },
+        "editLink": {
+          "type": "string"
+        },
+        "fragments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/Id"
+              },
+              "textId": {
+                "$ref": "#/$defs/Id"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/Id"
+              },
+              "title": {
+                "type": "string"
+              },
+              "viewLink": {
+                "type": "string"
+              },
+              "commentLink": {
+                "type": "string"
+              },
+              "editLink": {
+                "type": "string"
+              },
+              "numSteps": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "viewLink",
+              "commentLink",
+              "editLink",
+              "numSteps"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "owner",
+        "public",
+        "viewToken",
+        "commentToken",
+        "editToken",
+        "viewLink",
+        "commentLink",
+        "editLink"
+      ],
+      "additionalProperties": false
+    },
+    "ReadSharingResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/SharingBody"
+        }
+      ]
+    },
+    "UpdateSharingResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/SharingBody"
+        }
+      ]
+    },
+    "FileMetadataResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/FileAttachment"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "orgpageIds": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Id"
+                  }
+                }
+              },
+              "required": [
+                "orgpageIds"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ImageMetadataResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ImageAttachment"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "orgpageIds": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Id"
+                  }
+                }
+              },
+              "required": [
+                "orgpageIds"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "UploadResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "files": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/FileAttachment"
+              }
+            },
+            "images": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ImageAttachment"
+              }
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ApiErrorDetails"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "RenameFileResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "oldFileId": {
+              "$ref": "#/$defs/Id"
+            },
+            "oldPosterId": {
+              "$ref": "#/$defs/Id"
+            },
+            "fileOps": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ReturnedOperation"
+              }
+            },
+            "orgpageOps": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/ReturnedOperation"
+                }
+              }
+            },
+            "dryRun": {
+              "const": true
+            },
+            "file": {
+              "$ref": "#/$defs/FileAttachment"
+            },
+            "poster": {
+              "$ref": "#/$defs/ImageAttachment"
+            }
+          },
+          "required": [
+            "fileOps",
+            "orgpageOps",
+            "file"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "RenameImageResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/ImageAttachment"
+            },
+            "oldImageId": {
+              "$ref": "#/$defs/Id"
+            },
+            "imageOps": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ReturnedOperation"
+              }
+            },
+            "orgpageOps": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/ReturnedOperation"
+                }
+              }
+            },
+            "dryRun": {
+              "const": true
+            }
+          },
+          "required": [
+            "image",
+            "imageOps",
+            "orgpageOps"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ScreenshotDryRunBody": {
+      "type": "object",
+      "properties": {
+        "dryRun": {
+          "const": true
+        },
+        "format": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "dryRun",
+        "format"
+      ],
+      "additionalProperties": true,
+      "description": "A ScreenshotRequest object with dryRun and format added."
+    },
+    "ScreenshotResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/ScreenshotDryRunBody"
+        }
+      ],
+      "description": "A successful non-dry-run screenshot is binary and therefore is not a JSON instance."
+    },
+    "PrintDryRunBody": {
+      "type": "object",
+      "properties": {
+        "dryRun": {
+          "const": true
+        }
+      },
+      "required": [
+        "dryRun"
+      ],
+      "additionalProperties": true,
+      "description": "A PrintRequest object with dryRun added."
+    },
+    "PrintResponse": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ApiErrorResponse"
+        },
+        {
+          "$ref": "#/$defs/PrintDryRunBody"
+        }
+      ],
+      "description": "A successful non-dry-run print is binary and therefore is not a JSON instance."
+    }
+  }
+}

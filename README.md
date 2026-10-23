@@ -1,13 +1,15 @@
 # OrgPad API v1
 
-The OrgPad API is an experimental HTTP API that lets you read and edit OrgPages and their content.
+The OrgPad API is an HTTP API that lets you read and edit OrgPages and their content.
 
 You can use it to automate repetitive work, create OrgPages from external data, build custom integrations, or connect
 OrgPad with tools you already use. The API supports JSON, EDN, and Transit for request and response bodies.
 
-The API is still experimental, and your feedback can help shape it. If something is unclear, missing, or not working as
-expected, create an issue here, join our [Discord server](https://orgpad.info/discord) or write to us
-at [support@orgpad.info](mailto:support@orgpad.info).
+**API compatibility.** OrgPad aims to keep the documented API compatible. When changes are needed, they are recorded
+in the [API changelog](changelog.md). Avoid relying on undocumented behavior.
+
+If something is unclear, missing, or not working as expected, create an issue here, join our
+[Discord server](https://orgpad.info/discord) or write to us at [support@orgpad.info](mailto:support@orgpad.info).
 
 ## Contents
 
@@ -237,4 +239,4 @@ For exact request bodies, response shapes, parameters, and examples, see the ref
 | [Attachments](attachments.md)                 | Uploading files and images, and renaming uploaded assets.                                                |
 | [Screenshot an OrgPage](screenshot.md)        | Generating one PNG or WebP image from an OrgPage.                                                        |
 | [Print an OrgPage](print.md)                  | Generating a PDF from an OrgPage or presentation path.                                                   |
-| [Malli schemas](schema.cljc)                  | Standalone Clojure/[Malli](https://github.com/metosin/malli) schemas for EDN request bodies.             |
+| [Schemas and TypeScript types](schema.md)    | Malli and JSON schemas, TypeScript request and response types, and their scope.                           |

@@ -58,7 +58,7 @@ desktop fragment is set.
 | `size`           | `:print/size`             | `a4`, `letter`, `ratio-4-to-3`, or `ratio-16-to-9`. The default is `a4`. |
 | `orientation`    | `:print/orientation`      | `landscape` or `portrait`. The default is `landscape`.                   |
 | `padding`        | `:print/padding`          | A uniform padding number or `[horizontal, vertical]`, from 0 to 500.     |
-| `pathId`         | `:print/path-id`          | A path ID or text ID. Prints every path step into one merged PDF.        |
+| `pathId`         | `:print/path-id`          | A path ID. Prints every path step into one merged PDF.                   |
 | `fragmentId`     | `:print/fragment-id`      | An explicit fragment ID, an implicit fragment target, or its text ID.    |
 | `open`           | `:print/open`             | Use `all` (`:all` in EDN) to open all cells.                             |
 | `openedPageIds`  | `:print/opened-page-ids`  | Page IDs or text IDs to open.                                            |
@@ -72,7 +72,8 @@ that object's implicit fragment. See [fragments and implicit fragments](orgpage.
 
 `pathId` uses the path's ordered steps. It cannot be combined with another target form.
 
-The public EDN Malli schema is available as `print-orgpage` in [Malli schemas](schema.cljc).
+The public EDN Malli schema is available as `print-orgpage` in
+[Schemas and TypeScript types](schema.md).
 
 ## Choose a Print Target
 
@@ -107,11 +108,11 @@ The endpoint can return normal authentication, permission, request-body, and ID 
 
 ## Related Pages
 
-| Page                                   | When to use it                                            |
-| -------------------------------------- | --------------------------------------------------------- |
-| [Screenshot an OrgPage](screenshot.md) | Generate a PNG or WebP image from an OrgPage.             |
-| [Input and output formats](formats.md) | Choose PDF and structured error formats.                  |
-| [Authentication and API keys](auth.md) | Create a view key and understand sharing-token access.    |
-| [OrgPage data](orgpage.md)             | Learn about fragments, units, links, paths, and text IDs. |
-| [Malli schemas](schema.cljc)           | Validate EDN request bodies before calling the endpoint.  |
-| [Errors](errors.md)                    | Handle print and normal API errors.                       |
+| Page                                      | When to use it                                            |
+|-------------------------------------------|-----------------------------------------------------------|
+| [Screenshot an OrgPage](screenshot.md)    | Generate a PNG or WebP image from an OrgPage.             |
+| [Input and output formats](formats.md)    | Choose PDF and structured error formats.                  |
+| [Authentication and API keys](auth.md)    | Create a view key and understand sharing-token access.    |
+| [OrgPage data](orgpage.md)                | Learn about fragments, units, links, paths, and text IDs. |
+| [Schemas and TypeScript types](schema.md) | Validate EDN request bodies before calling the endpoint.  |
+| [Errors](errors.md)                       | Handle print and normal API errors.                       |
